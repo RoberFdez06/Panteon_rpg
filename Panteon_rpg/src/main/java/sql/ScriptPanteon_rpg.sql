@@ -94,16 +94,28 @@ CREATE TABLE bestiario (
 
 -- 8. Insertar el catálogo de los 10 Monstruos Mitológicos
 INSERT INTO monstruos (nombre, tipo, hp_max, ataque, defensa, velocidad, suerte) VALUES
+
 ('Basilisco Menor', 'Rápido', 30, 10, 2, 80, 15),
+
 ('Harpía', 'Volador', 40, 15, 3, 90, 20),
+
 ('Sombra Espectral', 'Mágico', 50, 12, 5, 75, 40),
+
 ('Golem de Piedra', 'Tanque', 150, 25, 15, 0, 0),
+
 ('Minotauro', 'Berserker', 100, 30, 8, 40, 10),
+
 ('Cíclope', 'Pesado', 180, 45, 10, 10, 5),
+
 ('Quimera', 'Equilibrado', 120, 25, 12, 50, 15),
+
 ('Hidra de Lerna', 'Colosal', 250, 20, 15, 20, 10),
+
 ('Fénix de Fuego', 'Rápido', 130, 35, 10, 85, 35),
-('Dragón Ancestral', 'Jefe', 300, 50, 20, 60, 25);
+
+('Dragón Ancestral', 'Jefe', 300, 50, 20, 60, 25); 
+
+
 
 CREATE TABLE IF NOT EXISTS bestiario_partida (
     partida_id INT,

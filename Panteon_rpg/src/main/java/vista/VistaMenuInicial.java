@@ -26,6 +26,7 @@ public class VistaMenuInicial extends javax.swing.JFrame {
         btnBestiario = new javax.swing.JButton();
         btnCementerio = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnVerLore = new javax.swing.JButton();
         ladrillosFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,6 +82,11 @@ public class VistaMenuInicial extends javax.swing.JFrame {
         btnSalir.setDefaultCapable(false);
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 500, 140, 160));
 
+        btnVerLore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Iconos/BtnVerLore.png"))); // NOI18N
+        btnVerLore.setBorderPainted(false);
+        btnVerLore.setContentAreaFilled(false);
+        getContentPane().add(btnVerLore, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, 160, 70));
+
         ladrillosFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondosMenus/FondoMenuInicial.jpg"))); // NOI18N
         getContentPane().add(ladrillosFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -125,12 +131,17 @@ public class VistaMenuInicial extends javax.swing.JFrame {
         return btnSalir;
     }
 
+    public javax.swing.JButton getBtnVerLore() {
+        return btnVerLore;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBestiario;
     private javax.swing.JButton btnCementerio;
     private javax.swing.JButton btnNuevaPartida;
     private javax.swing.JButton btnReanudarPartida;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnVerLore;
     private javax.swing.JLabel ladrillosFondo;
     // End of variables declaration//GEN-END:variables
 }

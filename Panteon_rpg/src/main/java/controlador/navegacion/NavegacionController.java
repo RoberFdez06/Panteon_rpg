@@ -65,4 +65,8 @@ public class NavegacionController {
     public void irAContinuarRun() {
         cambiarVista(new VistaContinuarRun());
     }
+
+    public void irACementerio() {
+        cambiarVista(new VistaCementerio());
+    }
 }

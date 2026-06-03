@@ -262,7 +262,7 @@ public class VistaBestiario extends javax.swing.JFrame {
         volverInicio.setFont(new java.awt.Font("Cinzel", 1, 18)); // NOI18N
         volverInicio.setText("Volver");
         volverInicio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 623, 110, 60));
+        getContentPane().add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 110, 60));
 
         libroFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondosMenus/FondoBestiario.jpg"))); // NOI18N
         getContentPane().add(libroFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

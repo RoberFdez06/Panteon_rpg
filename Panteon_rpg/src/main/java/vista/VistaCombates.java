@@ -14,6 +14,14 @@ public class VistaCombates extends javax.swing.JFrame {
         new controlador.eventos.CombatesController(this);
     }
 
+    public javax.swing.JLabel getTxtPiso() {
+        return txtPiso;
+    }
+
+    public void setPiso(String textoPiso) {
+        txtPiso.setText(textoPiso);
+    }
+
     /**
      * Permite al controlador actualizar la información gráfica de la interfaz
      * sin romper el MVC.
@@ -51,6 +59,7 @@ public class VistaCombates extends javax.swing.JFrame {
         vidaMonstruo1 = new javax.swing.JLabel();
         vidaPersonaje = new javax.swing.JLabel();
         txtInfo = new javax.swing.JLabel();
+        txtPiso = new javax.swing.JLabel();
         fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,8 +100,13 @@ public class VistaCombates extends javax.swing.JFrame {
         txtInfo.setForeground(new java.awt.Color(255, 255, 255));
         txtInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtInfo.setText("Esperando info");
-        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 810, 110));
-        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 410, 810, 110));
+
+        txtPiso.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
+        txtPiso.setForeground(new java.awt.Color(255, 255, 255));
+        txtPiso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(txtPiso, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 330, 100));
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -122,6 +136,7 @@ public class VistaCombates extends javax.swing.JFrame {
     private javax.swing.JLabel monstruo;
     private javax.swing.JLabel personaje;
     private javax.swing.JLabel txtInfo;
+    private javax.swing.JLabel txtPiso;
     private javax.swing.JLabel vidaMonstruo1;
     private javax.swing.JLabel vidaPersonaje;
     // End of variables declaration//GEN-END:variables

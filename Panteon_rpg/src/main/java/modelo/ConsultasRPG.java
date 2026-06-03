@@ -206,4 +206,24 @@ public class ConsultasRPG extends ConexionBD {
         }
         return lista;
     }
+
+    public boolean existeNombrePartida(String nombre) {
+        Connection con = getConexion();
+        String sql = "SELECT COUNT(*) FROM partidas WHERE nombre_partida = ?";
+        boolean existe = false;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                existe = rs.getInt(1) > 0;
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println("Error al verificar nombre: " + e.getMessage());
+        }
+        return existe;
+    }
 }

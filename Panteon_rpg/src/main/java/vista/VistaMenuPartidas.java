@@ -145,7 +145,7 @@ public class VistaMenuPartidas extends javax.swing.JFrame {
         volverInicio.setFont(new java.awt.Font("Cinzel", 1, 18)); // NOI18N
         volverInicio.setText("Volver");
         volverInicio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, 110, 60));
+        getContentPane().add(volverInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 110, 60));
 
         partidasFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondosMenus/FondoMenuPartidasGuardadas.jpg"))); // NOI18N
         getContentPane().add(partidasFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

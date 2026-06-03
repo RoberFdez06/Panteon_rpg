@@ -18,8 +18,9 @@ public class CombatesController {
     }
 
     private void inicializarEventos() {
+        // 1. Lógica del botón ATACAR
         vista.getBtnAtaque().addActionListener(e -> {
-            // Deshabilitamos el botón para evitar spam y clics dobles mientras dura el turno
+            // Deshabilitamos el botón para evitar spam
             vista.getBtnAtaque().setEnabled(false);
 
             MonstruoController m = ctrlPrincipal.getMonstruoActual();
@@ -30,45 +31,27 @@ public class CombatesController {
                 return;
             }
 
-            // ==========================================
-            // PASO 1: TU ACCIÓN (ATAQUE DEL HÉROE)
-            // ==========================================
+            // PASO 1: ATAQUE DEL HÉROE
             int vidaAntesMonstruo = m.getHpActual();
-            int danoAlMonstruo = heroe.getAtaque();
-            m.recibirDano(danoAlMonstruo);
-
+            m.recibirDano(heroe.getAtaque());
             int danoRealizado = vidaAntesMonstruo - m.getHpActual();
-            String logHeroe = "¡Atacas al enemigo y le infliges " + danoRealizado + " puntos de daño!";
+            actualizarPantallaCombate("¡Atacas al enemigo y le infliges " + danoRealizado + " puntos de daño!");
 
-            // Actualizamos la pantalla al instante para ver tu golpe
-            actualizarPantallaCombate(logHeroe);
-
-            // ==========================================
-            // PASO 2: TURNO ENEMIGO (1 SEGUNDO DESPUÉS)
-            // ==========================================
+            // PASO 2: TURNO ENEMIGO (Temporizado)
             javax.swing.Timer timerEnemigo = new javax.swing.Timer(1000, evt -> {
-
                 if (m.estaMuerto()) {
-                    // Si con tu golpe muere, esperamos 1 segundo antes de cambiar de ventana
                     manejarFinDelCombate(true);
                 } else {
-                    // Si sigue vivo, contraataca
                     int danoAlHeroe = m.getAtaque();
-                    int nuevaVidaHeroe = heroe.getHp_actual() - danoAlHeroe;
-                    heroe.setHp_actual(Math.max(0, nuevaVidaHeroe));
+                    heroe.setHp_actual(Math.max(0, heroe.getHp_actual() - danoAlHeroe));
+                    actualizarPantallaCombate("¡El enemigo contraataca y te inflige " + danoAlHeroe + " puntos de daño!");
 
-                    String logMonstruo = "¡El enemigo contraataca y te inflige " + danoAlHeroe + " puntos de daño!";
-                    actualizarPantallaCombate(logMonstruo);
-
-                    // ==========================================
-                    // PASO 3: REVISAR DERROTA (1 SEGUNDO DESPUÉS)
-                    // ==========================================
+                    // PASO 3: REVISAR DERROTA
                     javax.swing.Timer timerFinal = new javax.swing.Timer(1000, evtFinal -> {
                         if (heroe.getHp_actual() <= 0) {
                             manejarFinDelCombate(false);
                         } else {
-                            // Si ambos siguen vivos, reactivamos el botón para el siguiente turno
-                            vista.getBtnAtaque().setEnabled(true);
+                            vista.getBtnAtaque().setEnabled(true); // Reactivamos
                         }
                     });
                     timerFinal.setRepeats(false);
@@ -77,7 +60,32 @@ public class CombatesController {
             });
             timerEnemigo.setRepeats(false);
             timerEnemigo.start();
-        });
+        }); // <-- Cierre correcto del addActionListener
+
+        // 2. Funcionalidad del JLabel 'txtPiso'
+        if (vista.getTxtPiso() != null) {
+            vista.getTxtPiso().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    javax.swing.JOptionPane.showMessageDialog(vista,
+                            "Te encuentras descendiendo por el piso actual.",
+                            "Información del Panteón",
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent e) {
+                    vista.getTxtPiso().setForeground(java.awt.Color.YELLOW);
+                    vista.getTxtPiso().setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                }
+
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent e) {
+                    vista.getTxtPiso().setForeground(java.awt.Color.WHITE);
+                    vista.getTxtPiso().setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                }
+            });
+        }
     }
 
     /**
@@ -97,6 +105,9 @@ public class CombatesController {
         Personaje heroe = ctrlPrincipal.getHeroeActual();
         MonstruoController monstruo = ctrlPrincipal.getMonstruoActual();
 
+        int numeroPiso = ctrlPrincipal.getPisoActual();
+        vista.setPiso("Piso: " + numeroPiso);
+        
         String txtVidaHeroe = "Vida Héroe: --/--";
         if (heroe != null) {
             txtVidaHeroe = heroe.getNombre() + " (HP: " + heroe.getHp_actual() + "/" + heroe.getHp_max() + ")";
