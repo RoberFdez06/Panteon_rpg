@@ -270,6 +270,7 @@ public class VistaBestiario extends javax.swing.JFrame {
         txtNombreCriatura1.setText("Esperando nombre");
         libroDerecha.add(txtNombreCriatura1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
+        imagenMounstruo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imagenMounstruo1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         libroDerecha.add(imagenMounstruo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 290, 130));
 

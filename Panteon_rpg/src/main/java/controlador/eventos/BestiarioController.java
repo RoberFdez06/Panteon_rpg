@@ -117,37 +117,37 @@ public class BestiarioController {
 
         switch (nombreNorm) {
             case "basilisco menor":
-                nombreArchivo = "BasiliscoMenorSinFondoV1Escalado.png";
+                nombreArchivo = "BasiliscoMenorSinFondoV1Escalado128px.png";
                 break;
             case "ciclope":
-                nombreArchivo = "CíclopeSinFondoV1Escalado.png";
+                nombreArchivo = "CíclopeSinFondoV1Escalado128px.png";
                 break;
             case "dragon ancestral":
-                nombreArchivo = "DragonAncestralSinFondoV1Escalado.png";
+                nombreArchivo = "DragonAncestralSinFondoV1Escalado128px.png";
                 break;
             case "fenix de fuego":
-                nombreArchivo = "FenixdeFuegoSinFondoV1Escalado.png";
+                nombreArchivo = "FenixdeFuegoSinFondoV1Escalado128px.png";
                 break;
             case "golem de piedra":
-                nombreArchivo = "GolemPiedraSinFondoV1Escalado.png";
+                nombreArchivo = "GolemPiedraSinFondoV1Escalado128px.png";
                 break;
             case "harpia":
-                nombreArchivo = "HarpiaSinFondoV1Escalado.png";
+                nombreArchivo = "HarpiaSinFondoV1Escalado128px.png";
                 break;
             case "hidra de lerna":
-                nombreArchivo = "HidradeLernaSinFondoV1Escalado.png";
+                nombreArchivo = "HidradeLernaSinFondoV1Escalado128px.png";
                 break;
             case "minotauro":
-                nombreArchivo = "MinotauroSinFondoV1Escalado.png";
+                nombreArchivo = "MinotauroSinFondoV1Escalado128px.png";
                 break;
             case "quimera":
-                nombreArchivo = "QuimeraSinFondoV1Escalado.png";
+                nombreArchivo = "QuimeraSinFondoV1Escalado128px.png";
                 break;
             case "sombra espectral":
-                nombreArchivo = "SombraEspectralSinFondoV1Escalado.png";
+                nombreArchivo = "SombraEspectralSinFondoV1Escalado128px.png";
                 break;
             default:
-                nombreArchivo = "SombraEspectralSinFondoV1Escalado.png";
+                nombreArchivo = "SombraEspectralSinFondoV1Escalado128px.png";
                 break;
         }
 
