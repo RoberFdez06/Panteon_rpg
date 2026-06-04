@@ -113,44 +113,47 @@ public class VistaCombates extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         monstruo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(monstruo, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 610, 360));
+        getContentPane().add(monstruo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 610, 360));
 
         personaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         personaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Personajes/PersonajeGenericoEspalda.png"))); // NOI18N
-        getContentPane().add(personaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 300, 520));
+        getContentPane().add(personaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 300, 520));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 543, 1230, 20));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 610, 1230, 20));
 
         ataque.setBackground(new java.awt.Color(255, 51, 51));
         ataque.setFont(new java.awt.Font("Cinzel", 1, 36)); // NOI18N
-        ataque.setText("ATACAR");
-        ataque.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(ataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 560, 200, 110));
+        ataque.setBorder(null);
+        ataque.setContentAreaFilled(false);
+        ataque.setDefaultCapable(false);
+        getContentPane().add(ataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 640, 240, 70));
 
         vidaMonstruo1.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         vidaMonstruo1.setForeground(new java.awt.Color(29, 143, 29));
         vidaMonstruo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vidaMonstruo1.setText("vida/vida max");
-        getContentPane().add(vidaMonstruo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 670, -1));
+        getContentPane().add(vidaMonstruo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, 670, -1));
 
         vidaPersonaje.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         vidaPersonaje.setForeground(new java.awt.Color(29, 143, 29));
         vidaPersonaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vidaPersonaje.setText("vida/vida max");
-        getContentPane().add(vidaPersonaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 410, -1));
+        getContentPane().add(vidaPersonaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 410, -1));
 
         txtInfo.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         txtInfo.setForeground(new java.awt.Color(255, 255, 255));
         txtInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtInfo.setText("Esperando info");
-        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 810, 110));
+        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 490, 810, 110));
 
         txtPiso.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         txtPiso.setForeground(new java.awt.Color(255, 255, 255));
         txtPiso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(txtPiso, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 330, 100));
-        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1280, 720));
+        getContentPane().add(txtPiso, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, 330, 100));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondosMenus/FondoCombate.png"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
