@@ -7,6 +7,10 @@ import modelo.Personaje;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * Controlador central que gestiona las acciones del usuario, el flujo de la
+ * partida y la persistencia de datos del sistema.
+ */
 public class AccionUsuarioController {
 
     private static AccionUsuarioController instancia;
@@ -14,15 +18,22 @@ public class AccionUsuarioController {
     private DataController dataCtrl = new DataController();
     private MonstruoController monstruoActual;
 
-    // Estado actual de la partida
     private Personaje heroeActual;
-    private int pisoActual = 1; // Se actualizará dinámicamente
+    private int pisoActual = 1;
     private String claseSeleccionada = "Guerrero";
 
+    /**
+     * Constructor privado para implementar el patrón Singleton.
+     */
     private AccionUsuarioController() {
         this.navCtrl = NavegacionController.getInstancia();
     }
 
+    /**
+     * Obtiene la única instancia del controlador de acciones.
+     *
+     * @return Instancia única de AccionUsuarioController.
+     */
     public static AccionUsuarioController getInstancia() {
         if (instancia == null) {
             instancia = new AccionUsuarioController();
@@ -30,71 +41,79 @@ public class AccionUsuarioController {
         return instancia;
     }
 
-    // --- GETTERS Y SETTERS ---
+    /**
+     * Obtiene el personaje actual en juego.
+     *
+     * @return El objeto Personaje activo.
+     */
     public Personaje getHeroeActual() {
         return heroeActual;
     }
 
+    /**
+     * Define el personaje activo en la sesión.
+     *
+     * @param heroeActual Personaje a establecer.
+     */
     public void setHeroeActual(Personaje heroeActual) {
         this.heroeActual = heroeActual;
     }
 
+    /**
+     * Obtiene el monstruo al que se enfrenta el jugador.
+     *
+     * @return Controlador del monstruo actual.
+     */
     public MonstruoController getMonstruoActual() {
         return monstruoActual;
     }
 
+    /**
+     * Obtiene el número del piso actual.
+     *
+     * @return El entero representando el piso.
+     */
     public int getPisoActual() {
         return pisoActual;
     }
 
     /**
-     * Genera un nuevo monstruo adaptado al piso actual para permitir runs
-     * infinitas. - Pisos múltiplos de 10: JEFES (Dragón Ancestral, Hidra de
-     * Lerna) -> x2.5 HP, x1.4 ATQ - Pisos múltiplos de 5 (pero no de 10):
-     * MINIJEFES (Fénix de Fuego, Cíclope, Golem de Piedra) -> x1.6 HP, x1.2 ATQ
-     * - Resto de pisos: Monstruos comunes cargados de forma aleatoria.
+     * Genera un nuevo monstruo adaptado al piso actual. Escala estadísticas
+     * según sea un jefe, minijefe o enemigo común.
      */
     public void generarNuevoMonstruo() {
         this.monstruoActual = new MonstruoController();
 
-        // Determinar el tipo de encuentro según el piso
         boolean esJefe = (this.pisoActual % 10 == 0);
         boolean esMiniJefe = (this.pisoActual % 5 == 0 && !esJefe);
 
         if (esJefe) {
-            // Pool de JEFES SUPREMOS
             String[] jefes = {"Dragón Ancestral", "Hidra de Lerna"};
             String jefeElegido = jefes[(int) (Math.random() * jefes.length)];
 
             this.monstruoActual.cargarMonstruoPorNombre(jefeElegido);
-            ajustarEstadisticasMonstruo(2.5, 1.4); // Multiplicadores de Jefe
-
-            System.out.println("¡¡ALERTA DE ALTO PELIGRO!! ¡UN JEFE HA DESPERTADO EN EL PISO " + this.pisoActual + ": " + monstruoActual.getNombre() + "!!");
+            ajustarEstadisticasMonstruo(2.5, 1.4);
         } else if (esMiniJefe) {
-            // Pool de MINIJEFES
             String[] miniJefes = {"Fénix de Fuego", "Cíclope", "Golem de Piedra"};
             String miniJefeElegido = miniJefes[(int) (Math.random() * miniJefes.length)];
 
             this.monstruoActual.cargarMonstruoPorNombre(miniJefeElegido);
-            ajustarEstadisticasMonstruo(1.6, 1.2); // Multiplicadores de MiniJefe
-
-            System.out.println("¡CUIDADO! ¡Un Mini-Jefe bloquea el paso en el piso " + this.pisoActual + ": " + monstruoActual.getNombre() + "!");
+            ajustarEstadisticasMonstruo(1.6, 1.2);
         } else {
-            // Enemy común aleatorio
             this.monstruoActual.cargarMonstruoAleatorio();
         }
 
-        // Registrar avistamiento en el Bestiario
         if (this.heroeActual != null && this.monstruoActual != null) {
             modelo.ConsultasRPG consultas = new modelo.ConsultasRPG();
             consultas.registrarAvistamientoBestiario(this.heroeActual.getPartida_id(), this.monstruoActual.getId());
-            System.out.println("¡Monstruo '" + monstruoActual.getNombre() + "' registrado en el Bestiario!");
         }
     }
 
     /**
-     * Método auxiliar para escalar los atributos base de los jefes y minijefes
-     * dinámicamente en base al piso, curándolos por completo tras la mutación.
+     * Ajusta las estadísticas base del monstruo mediante multiplicadores.
+     *
+     * @param factorHp Multiplicador para la salud máxima.
+     * @param factorAtq Multiplicador para el poder de ataque.
      */
     private void ajustarEstadisticasMonstruo(double factorHp, double factorAtq) {
         if (this.monstruoActual == null) {
@@ -105,11 +124,13 @@ public class AccionUsuarioController {
         int nuevoAtaque = (int) (this.monstruoActual.getAtaque() * factorAtq);
 
         this.monstruoActual.setHpMax(nuevoHpMax);
-        this.monstruoActual.setHpActual(nuevoHpMax); // Rellenamos su vida al nuevo límite
+        this.monstruoActual.setHpActual(nuevoHpMax);
         this.monstruoActual.setAtaque(nuevoAtaque);
     }
 
-    // --- MÉTODOS DE NAVEGACIÓN ---
+    /**
+     * Gestiona la lógica al intentar crear una nueva partida.
+     */
     public void clickNuevaPartida() {
         if (contarPartidasGuardadasDB() >= 3) {
             javax.swing.JOptionPane.showMessageDialog(
@@ -124,24 +145,41 @@ public class AccionUsuarioController {
         }
     }
 
+    /**
+     * Dirige al usuario al menú de selección de partidas.
+     */
     public void clickReanudarPartida() {
         navCtrl.irAMenuPartidas();
     }
 
+    /**
+     * Dirige al usuario al bestiario.
+     */
     public void clickAbrirBestiario() {
         navCtrl.irABestiario();
     }
 
+    /**
+     * Finaliza la ejecución del juego.
+     */
     public void clickSalirJuego() {
         System.exit(0);
     }
 
-    // --- MÉTODOS DE CREACIÓN ---
+    /**
+     * Establece la clase seleccionada para el personaje.
+     *
+     * @param clase String representando la clase.
+     */
     public void seleccionarClase(String clase) {
         this.claseSeleccionada = clase;
-        System.out.println("Clase seleccionada: " + clase);
     }
 
+    /**
+     * Inicia una nueva sesión de juego con un personaje dado.
+     *
+     * @param nombrePersonaje Nombre del nuevo héroe.
+     */
     public void clickIniciarRun(String nombrePersonaje) {
         Personaje heroeTemporal = new Personaje(0, 0, nombrePersonaje, claseSeleccionada, 1, 0, 100, 100, 10, 10, 10, 5, 50, 50);
         int idPartida = dataCtrl.iniciarNuevaRun(nombrePersonaje, heroeTemporal);
@@ -154,19 +192,29 @@ public class AccionUsuarioController {
         }
     }
 
-    // --- MÉTICODS DE PARTIDAS ---
+    /**
+     * Guarda el estado actual del personaje en la persistencia.
+     */
     public void clickGuardarPartida() {
         if (heroeActual != null) {
             dataCtrl.guardarProgreso(heroeActual, pisoActual);
-            System.out.println("Partida guardada en el piso " + pisoActual);
         }
     }
 
+    /**
+     * Elimina una partida específica de la base de datos.
+     *
+     * @param idPartida ID de la partida a eliminar.
+     */
     public void clickBorrarPartida(int idPartida) {
         dataCtrl.borrarPartida(idPartida);
-        System.out.println("Partida " + idPartida + " borrada.");
     }
 
+    /**
+     * Carga una partida guardada y redirige al combate.
+     *
+     * @param idPartida ID de la partida a retomar.
+     */
     public void clickCargarPartida(int idPartida) {
         this.heroeActual = dataCtrl.cargarPartida(idPartida);
         if (this.heroeActual != null) {
@@ -176,7 +224,9 @@ public class AccionUsuarioController {
         }
     }
 
-    // --- MÉTODOS DE COMBATE ---
+    /**
+     * Ejecuta la lógica de ataque entre el héroe y el monstruo.
+     */
     public void clickAtacar() {
         if (monstruoActual != null && heroeActual != null) {
             int danoAlMonstruo = heroeActual.getAtaque();
@@ -185,8 +235,6 @@ public class AccionUsuarioController {
             if (monstruoActual.estaMuerto()) {
                 int monstruosDerrotados = heroeActual.getExperiencia() + 1;
                 heroeActual.setExperiencia(monstruosDerrotados);
-
-                System.out.println("Monstruos derrotados para el siguiente nivel: " + monstruosDerrotados + "/3");
 
                 if (monstruosDerrotados >= 3) {
                     subirNivelHeroe();
@@ -208,74 +256,75 @@ public class AccionUsuarioController {
     }
 
     /**
-     * Sube el nivel numérico, escala las estadísticas un 15% en salud y añade
-     * puntos planos, sana un 30% de la nueva vida máxima total calculada y
-     * limpia el contador de bajas.
+     * Incrementa estadísticas y nivel del héroe tras cumplir objetivos.
      */
     public void subirNivelHeroe() {
         if (this.heroeActual == null) {
             return;
         }
 
-        // 1. Incrementar el nivel
         int nivelNuevo = this.heroeActual.getNivel() + 1;
         this.heroeActual.setNivel(nivelNuevo);
-
-        // 2. Reiniciar contador de experiencia interna (bajas)
         this.heroeActual.setExperiencia(0);
 
-        // 3. Escalar y actualizar las estadísticas base del Personaje
-        int nuevaHpMax = (int) (this.heroeActual.getHp_max() * 1.15); // +15% HP Max
+        int nuevaHpMax = (int) (this.heroeActual.getHp_max() * 1.15);
         this.heroeActual.setHp_max(nuevaHpMax);
-        this.heroeActual.setAtaque(this.heroeActual.getAtaque() + 10);      // +10 ATQ
-        this.heroeActual.setDefensa(this.heroeActual.getDefensa() + 5);     // +5 DEF
-        this.heroeActual.setVelocidad(this.heroeActual.getVelocidad() + 4); // +4 VEL
+        this.heroeActual.setAtaque(this.heroeActual.getAtaque() + 10);
+        this.heroeActual.setDefensa(this.heroeActual.getDefensa() + 5);
+        this.heroeActual.setVelocidad(this.heroeActual.getVelocidad() + 4);
 
-        // 4. CURACIÓN PARCIAL (30% de la nueva vida máxima)
         int puntosACurar = (int) (nuevaHpMax * 0.30);
         int vidaCalculada = this.heroeActual.getHp_actual() + puntosACurar;
 
-        // Tope de seguridad
         this.heroeActual.setHp_actual(Math.min(nuevaHpMax, vidaCalculada));
-
-        // Restaurar estamina por completo
         this.heroeActual.setEstamina_actual(this.heroeActual.getEstamina_max());
 
-        System.out.println("¡SUBIDA DE NIVEL LOGRADA! " + this.heroeActual.getNombre() + " avanzó al Nivel " + nivelNuevo);
-        System.out.println("Curación recibida por Level Up: +" + puntosACurar + " HP");
-        System.out.println("Nuevas Stats -> HP Actual: " + this.heroeActual.getHp_actual() + "/" + nuevaHpMax + " | ATQ: " + this.heroeActual.getAtaque());
-
-        // 5. Forzar el guardado automático del progreso escalado en la Base de Datos
         dataCtrl.guardarProgreso(this.heroeActual, this.pisoActual);
     }
 
-    // --- MÉTODOS DE RESULTADOS ---
+    /**
+     * Acción para continuar tras una victoria.
+     */
     public void clickContinuarVictoria() {
         navCtrl.irAContinuarRun();
     }
 
+    /**
+     * Acción para salir tras una derrota.
+     */
     public void clickSalirDerrota() {
         navCtrl.irAMenuPrincipal();
     }
 
+    /**
+     * Acción para regresar al menú principal.
+     */
     public void clickVolverAlInicio() {
         navCtrl.irAMenuPrincipal();
     }
 
+    /**
+     * Incrementa el piso actual y genera el siguiente encuentro.
+     */
     public void clickAvanzarSiguientePiso() {
         this.pisoActual++;
         generarNuevoMonstruo();
         navCtrl.irACombate();
     }
 
+    /**
+     * Redirige a la vista del cementerio.
+     */
     public void clickAbrirCementerio() {
-        System.out.println("Abriendo el Libro de los Caídos...");
         navCtrl.irACementerio();
     }
 
-    // =========================================================================
-    //  [MVC PURO]: MÉTODOS DE CONSULTA DIRECTA A BASE DE DATOS
-    // =========================================================================
+    /**
+     * Consulta el nivel de piso actual almacenado para una partida en BD.
+     *
+     * @param idPartida ID de la partida a consultar.
+     * @return El número de piso actual.
+     */
     private int obtenerPisoPartidaDB(int idPartida) {
         int piso = 1;
         try {
@@ -300,6 +349,11 @@ public class AccionUsuarioController {
         return piso;
     }
 
+    /**
+     * Obtiene el conjunto de nombres de monstruos descubiertos por el héroe.
+     *
+     * @return Set de nombres de monstruos.
+     */
     public Set<String> obtenerMonstruosDescubiertosDB() {
         if (this.heroeActual != null) {
             modelo.ConsultasRPG consultas = new modelo.ConsultasRPG();
@@ -308,6 +362,12 @@ public class AccionUsuarioController {
         return new HashSet<>();
     }
 
+    /**
+     * Consulta los atributos base de un monstruo en la base de datos.
+     *
+     * @param nombreMonstruo Nombre del monstruo a consultar.
+     * @return Mapa con los datos del monstruo.
+     */
     public java.util.Map<String, Object> consultarDatosMonstruo(String nombreMonstruo) {
         java.util.Map<String, Object> datos = new java.util.HashMap<>();
         try {
@@ -336,6 +396,11 @@ public class AccionUsuarioController {
         return datos;
     }
 
+    /**
+     * Cuenta cuántas partidas están guardadas actualmente en el sistema.
+     *
+     * @return Total de partidas.
+     */
     private int contarPartidasGuardadasDB() {
         int totalPartidas = 0;
         try {
@@ -359,6 +424,13 @@ public class AccionUsuarioController {
         return totalPartidas;
     }
 
+    /**
+     * Obtiene una lista de héroes caídos para mostrar en el cementerio.
+     *
+     * @param limite Cantidad máxima de registros.
+     * @param offset Desplazamiento de registros.
+     * @return Lista de objetos conteniendo datos de los héroes caídos.
+     */
     public java.util.List<Object[]> obtenerHeroesCaidosDB(int limite, int offset) {
         java.util.List<Object[]> listaCaidos = new java.util.ArrayList<>();
         try {
@@ -366,7 +438,6 @@ public class AccionUsuarioController {
             };
             java.sql.Connection con = conexionBD.getConexion();
 
-            // Buscamos a los héroes muertos (hp_actual <= 0), ordenados del más reciente al más antiguo
             String sql = "SELECT nombre, clase, nivel, piso_actual FROM partidas WHERE hp_actual <= 0 ORDER BY id DESC LIMIT ? OFFSET ?";
 
             java.sql.PreparedStatement ps = con.prepareStatement(sql);

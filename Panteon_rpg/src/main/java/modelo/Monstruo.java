@@ -1,5 +1,9 @@
 package modelo;
 
+/**
+ * Clase que representa a un enemigo (monstruo) dentro del juego. Contiene sus
+ * atributos base y su estado de descubrimiento en el bestiario.
+ */
 public class Monstruo {
 
     private int id;
@@ -12,6 +16,9 @@ public class Monstruo {
     private int suerte;
     private boolean descubierto;
 
+    /**
+     * Constructor por defecto con valores iniciales.
+     */
     public Monstruo() {
         this.id = 0;
         this.nombre = "Desconocido";
@@ -24,6 +31,9 @@ public class Monstruo {
         this.descubierto = false;
     }
 
+    /**
+     * Constructor para inicializar un monstruo sin estado de descubrimiento.
+     */
     public Monstruo(int id, String nombre, String tipo, int hp_max, int ataque, int defensa, int velocidad, int suerte) {
         this.id = id;
         this.nombre = nombre;
@@ -33,8 +43,12 @@ public class Monstruo {
         this.defensa = defensa;
         this.velocidad = velocidad;
         this.suerte = suerte;
+        this.descubierto = false;
     }
 
+    /**
+     * Constructor completo para inicializar todos los atributos del monstruo.
+     */
     public Monstruo(int id, String nombre, String tipo, int hp_max, int ataque, int defensa, int velocidad, int suerte, boolean descubierto) {
         this.id = id;
         this.nombre = nombre;
@@ -47,6 +61,7 @@ public class Monstruo {
         this.descubierto = descubierto;
     }
 
+    // --- Getters y Setters ---
     public int getId() {
         return id;
     }

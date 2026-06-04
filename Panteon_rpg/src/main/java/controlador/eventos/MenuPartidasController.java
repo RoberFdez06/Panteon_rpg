@@ -8,19 +8,28 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
+/**
+ * Controlador para la gestión de las ranuras de guardado de partidas. Permite
+ * al jugador seleccionar, cargar o eliminar partidas existentes.
+ */
 public class MenuPartidasController {
 
     private VistaMenuPartidas vista;
     private AccionUsuarioController ctrlPrincipal;
 
-    // IDs reales de la BD para cada ranura (-1 significa vacía)
+    // IDs de la base de datos para cada ranura (-1 indica ranura vacía)
     private int idPartidaRanura1 = -1;
     private int idPartidaRanura2 = -1;
     private int idPartidaRanura3 = -1;
 
-    // Guarda el número de ranura clicado (1, 2, 3 o -1 si ninguna)
+    // Almacena el número de ranura seleccionada actualmente (1, 2, 3 o -1)
     private int ranuraSeleccionada = -1;
 
+    /**
+     * Inicializa el controlador con la vista de selección de partidas.
+     *
+     * @param vista La vista del menú de partidas.
+     */
     public MenuPartidasController(VistaMenuPartidas vista) {
         this.vista = vista;
         this.ctrlPrincipal = AccionUsuarioController.getInstancia();
@@ -28,13 +37,17 @@ public class MenuPartidasController {
         cargarYMostrarPartidas();
     }
 
+    /**
+     * Configura los listeners para los botones de acción y la selección de
+     * ranuras.
+     */
     private void inicializarEventos() {
-        // --- SELECCIÓN DE RANURAS ---
+        // --- Selección de ranuras ---
         configurarClicRanura(vista.getPanelGuardados1(), 1);
         configurarClicRanura(vista.getPanelGuardados2(), 2);
         configurarClicRanura(vista.getPanelGuardados3(), 3);
 
-        // --- BOTÓN REANUDAR / CARGAR PARTIDA (CORREGIDO) ---
+        // --- Cargar Partida ---
         vista.getBtnCargarPartida().addActionListener(e -> {
             if (ranuraSeleccionada == -1) {
                 JOptionPane.showMessageDialog(vista,
@@ -43,19 +56,8 @@ public class MenuPartidasController {
                 return;
             }
 
-            // Averiguamos la ID de la partida seleccionada
-            int idACargar = -1;
-            if (ranuraSeleccionada == 1) {
-                idACargar = idPartidaRanura1;
-            }
-            if (ranuraSeleccionada == 2) {
-                idACargar = idPartidaRanura2;
-            }
-            if (ranuraSeleccionada == 3) {
-                idACargar = idPartidaRanura3;
-            }
+            int idACargar = obtenerIdPorRanura(ranuraSeleccionada);
 
-            // Validamos si la ranura está vacía
             if (idACargar == -1) {
                 JOptionPane.showMessageDialog(vista,
                         "Esa ranura está vacía. Ve al menú principal para iniciar una nueva aventura.",
@@ -63,27 +65,17 @@ public class MenuPartidasController {
                 return;
             }
 
-            // ¡A jugar! Sincronizamos los datos, cargamos el piso real de la BD y abrimos el combate
             ctrlPrincipal.clickCargarPartida(idACargar);
         });
 
-        // --- BOTÓN BORRAR PARTIDA ---
+        // --- Borrar Partida ---
         vista.getBtnBorrarPartida().addActionListener(e -> {
             if (ranuraSeleccionada == -1) {
                 JOptionPane.showMessageDialog(vista, "Selecciona una partida antes de borrar.", "Ninguna Selección", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            int idABorrar = -1;
-            if (ranuraSeleccionada == 1) {
-                idABorrar = idPartidaRanura1;
-            }
-            if (ranuraSeleccionada == 2) {
-                idABorrar = idPartidaRanura2;
-            }
-            if (ranuraSeleccionada == 3) {
-                idABorrar = idPartidaRanura3;
-            }
+            int idABorrar = obtenerIdPorRanura(ranuraSeleccionada);
 
             if (idABorrar == -1) {
                 JOptionPane.showMessageDialog(vista, "No puedes borrar una ranura vacía.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -104,52 +96,38 @@ public class MenuPartidasController {
     }
 
     /**
-     * Muestra la información limpia directamente extraída de la base de datos
+     * Recupera la información de las partidas desde la base de datos y
+     * actualiza la vista.
      */
     public void cargarYMostrarPartidas() {
         modelo.ConsultasRPG consultas = new modelo.ConsultasRPG();
         List<Map<String, Object>> partidas = consultas.obtenerTodasLasPartidas();
 
-        // --- RANURA 1 ---
+        // Actualización de ranura 1
         if (partidas.size() > 0) {
             Map<String, Object> p = partidas.get(0);
             idPartidaRanura1 = (int) p.get("partida_id");
-
-            vista.getTxtPartida().setText(String.valueOf(p.get("nombre_partida")));
-            vista.getTxtHeroe().setText("Héroe: " + (p.get("heroe_nombre") != null ? p.get("heroe_nombre") : "Sin Nombre"));
-            vista.getTxtClase().setText("Clase: " + (p.get("clase") != null ? p.get("clase") : "-"));
-            vista.getTxtPiso().setText("Piso: " + p.get("piso_actual"));
-            vista.getTxtNivel().setText("Nivel: " + (p.get("nivel") != null ? p.get("nivel") : "-"));
+            actualizarRanuraVisual(vista.getTxtPartida(), vista.getTxtHeroe(), vista.getTxtClase(), vista.getTxtPiso(), vista.getTxtNivel(), p);
         } else {
             idPartidaRanura1 = -1;
             vaciarRanuraVisual(vista.getTxtPartida(), vista.getTxtHeroe(), vista.getTxtClase(), vista.getTxtPiso(), vista.getTxtNivel());
         }
 
-        // --- RANURA 2 ---
+        // Actualización de ranura 2
         if (partidas.size() > 1) {
             Map<String, Object> p = partidas.get(1);
             idPartidaRanura2 = (int) p.get("partida_id");
-
-            vista.getTxtPartida1().setText(String.valueOf(p.get("nombre_partida")));
-            vista.getTxtHeroe1().setText("Héroe: " + (p.get("heroe_nombre") != null ? p.get("heroe_nombre") : "Sin Nombre"));
-            vista.getTxtClase1().setText("Clase: " + (p.get("clase") != null ? p.get("clase") : "-"));
-            vista.getTxtPiso1().setText("Piso: " + p.get("piso_actual"));
-            vista.getTxtNivel1().setText("Nivel: " + (p.get("nivel") != null ? p.get("nivel") : "-"));
+            actualizarRanuraVisual(vista.getTxtPartida1(), vista.getTxtHeroe1(), vista.getTxtClase1(), vista.getTxtPiso1(), vista.getTxtNivel1(), p);
         } else {
             idPartidaRanura2 = -1;
             vaciarRanuraVisual(vista.getTxtPartida1(), vista.getTxtHeroe1(), vista.getTxtClase1(), vista.getTxtPiso1(), vista.getTxtNivel1());
         }
 
-        // --- RANURA 3 ---
+        // Actualización de ranura 3
         if (partidas.size() > 2) {
             Map<String, Object> p = partidas.get(2);
             idPartidaRanura3 = (int) p.get("partida_id");
-
-            vista.getTxtPartida2().setText(String.valueOf(p.get("nombre_partida")));
-            vista.getTxtHeroe2().setText("Héroe: " + (p.get("heroe_nombre") != null ? p.get("heroe_nombre") : "Sin Nombre"));
-            vista.getTxtClase2().setText("Clase: " + (p.get("clase") != null ? p.get("clase") : "-"));
-            vista.getTxtPiso2().setText("Piso: " + p.get("piso_actual"));
-            vista.getTxtNivel2().setText("Nivel: " + (p.get("nivel") != null ? p.get("nivel") : "-"));
+            actualizarRanuraVisual(vista.getTxtPartida2(), vista.getTxtHeroe2(), vista.getTxtClase2(), vista.getTxtPiso2(), vista.getTxtNivel2(), p);
         } else {
             idPartidaRanura3 = -1;
             vaciarRanuraVisual(vista.getTxtPartida2(), vista.getTxtHeroe2(), vista.getTxtClase2(), vista.getTxtPiso2(), vista.getTxtNivel2());
@@ -166,6 +144,19 @@ public class MenuPartidasController {
         panel.addMouseListener(mouseHandler);
         for (java.awt.Component comp : panel.getComponents()) {
             comp.addMouseListener(mouseHandler);
+        }
+    }
+
+    private int obtenerIdPorRanura(int numeroRanura) {
+        switch (numeroRanura) {
+            case 1:
+                return idPartidaRanura1;
+            case 2:
+                return idPartidaRanura2;
+            case 3:
+                return idPartidaRanura3;
+            default:
+                return -1;
         }
     }
 
@@ -192,6 +183,14 @@ public class MenuPartidasController {
         vista.getPanelGuardados1().setBorder(null);
         vista.getPanelGuardados2().setBorder(null);
         vista.getPanelGuardados3().setBorder(null);
+    }
+
+    private void actualizarRanuraVisual(javax.swing.JLabel lblP, javax.swing.JLabel lblH, javax.swing.JLabel lblC, javax.swing.JLabel lblPi, javax.swing.JLabel lblN, Map<String, Object> p) {
+        lblP.setText(String.valueOf(p.get("nombre_partida")));
+        lblH.setText("Héroe: " + (p.get("heroe_nombre") != null ? p.get("heroe_nombre") : "Sin Nombre"));
+        lblC.setText("Clase: " + (p.get("clase") != null ? p.get("clase") : "-"));
+        lblPi.setText("Piso: " + p.get("piso_actual"));
+        lblN.setText("Nivel: " + (p.get("nivel") != null ? p.get("nivel") : "-"));
     }
 
     private void vaciarRanuraVisual(javax.swing.JLabel lblP, javax.swing.JLabel lblH, javax.swing.JLabel lblC, javax.swing.JLabel lblPi, javax.swing.JLabel lblN) {

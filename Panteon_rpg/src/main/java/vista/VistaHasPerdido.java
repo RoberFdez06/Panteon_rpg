@@ -1,15 +1,38 @@
 package vista;
 
+/**
+ * Interfaz gráfica encargada de representar la pantalla de derrota del juego.
+ * Se muestra cuando la salud del héroe llega a cero, permitiéndole interactuar
+ * para gestionar el fin de la run y regresar a los menús correspondientes.
+ */
 public class VistaHasPerdido extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaHasPerdido.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes gráficos,
+     * deshabilita el redimensionamiento de la interfaz e instancia su
+     * respectivo controlador para delegar la gestión lógica de los eventos de
+     * la escena.
+     */
     public VistaHasPerdido() {
         initComponents();
         this.setResizable(false);
 
         // [MVC ESTRICTO]: Control delegado
         new controlador.eventos.HasPerdidoController(this);
+    }
+
+    /**
+     * Proporciona acceso directo al botón de salida en la pantalla de derrota.
+     * Exigido por el modelo Vista-Controlador para la correcta vinculación de
+     * eventos.
+     *
+     * @return El componente JButton configurado para salir tras perder la
+     * partida.
+     */
+    public javax.swing.JButton getBtnSalir() {
+        return btnSalir;
     }
 
     /**
@@ -52,11 +75,6 @@ public class VistaHasPerdido extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new VistaHasPerdido().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnSalir() {
-        return btnSalir;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel fondoHasPerdido;

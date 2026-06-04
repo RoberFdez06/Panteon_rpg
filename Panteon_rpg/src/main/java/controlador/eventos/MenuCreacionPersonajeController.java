@@ -4,12 +4,23 @@ import vista.VistaMenuCreacionPersonaje;
 import modelo.ConsultasRPG;
 import javax.swing.JOptionPane;
 
+/**
+ * Controlador encargado de gestionar el proceso de creación de nuevos
+ * personajes, incluyendo la selección de clases y la validación de nombres
+ * únicos en la base de datos.
+ */
 public class MenuCreacionPersonajeController {
 
     private VistaMenuCreacionPersonaje vista;
     private AccionUsuarioController ctrlPrincipal;
-    private ConsultasRPG consultas; // Añadimos acceso a las consultas
+    private ConsultasRPG consultas;
 
+    /**
+     * Inicializa el controlador con la vista asociada y configura los
+     * componentes necesarios.
+     *
+     * @param vista Instancia de la vista de creación de personaje.
+     */
     public MenuCreacionPersonajeController(VistaMenuCreacionPersonaje vista) {
         this.vista = vista;
         this.ctrlPrincipal = AccionUsuarioController.getInstancia();
@@ -17,6 +28,10 @@ public class MenuCreacionPersonajeController {
         inicializarEventos();
     }
 
+    /**
+     * Registra los eventos de selección de clase, validación de nombre y
+     * navegación.
+     */
     private void inicializarEventos() {
         vista.getBtnGuerrero().addActionListener(e -> {
             ctrlPrincipal.seleccionarClase("Guerrero");
@@ -43,29 +58,25 @@ public class MenuCreacionPersonajeController {
             vista.setLabelClaseSeleccionada("Clase: Arquero");
         });
 
-        // --- VALIDACIÓN DE NOMBRE Y BBDD ---
         vista.getBtnRun().addActionListener(e -> {
             String nombreIngresado = vista.getTxtInputField().getText().trim();
 
-            // 1. Validar que no esté vacío
             if (nombreIngresado.isEmpty()) {
                 JOptionPane.showMessageDialog(vista,
                         "¡El nombre del héroe no puede estar vacío!",
                         "Error de creación",
                         JOptionPane.WARNING_MESSAGE);
-                return; // Cortamos aquí la ejecución
+                return;
             }
 
-            // 2. Validar duplicidad en la BBDD
             if (consultas.existeNombrePartida(nombreIngresado)) {
                 JOptionPane.showMessageDialog(vista,
                         "Ya existe un héroe con el nombre '" + nombreIngresado + "'. Elige otro.",
                         "Nombre duplicado",
                         JOptionPane.ERROR_MESSAGE);
-                return; // Cortamos aquí la ejecución
+                return;
             }
 
-            // 3. Si pasa los filtros, iniciamos la run
             ctrlPrincipal.clickIniciarRun(nombreIngresado);
         });
 

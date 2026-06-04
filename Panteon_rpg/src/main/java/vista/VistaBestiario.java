@@ -1,9 +1,17 @@
 package vista;
 
+/**
+ * Interfaz gráfica que representa el bestiario del juego.
+ * Muestra el índice de criaturas disponibles y sus estadísticas individuales al ser seleccionadas.
+ */
 public class VistaBestiario extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaBestiario.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa los componentes de la interfaz,
+     * bloquea el redimensionamiento de la ventana y vincula su controlador.
+     */
     public VistaBestiario() {
         initComponents();
         this.setResizable(false);
@@ -12,7 +20,17 @@ public class VistaBestiario extends javax.swing.JFrame {
 
     /**
      * Método exclusivamente visual: Recibe los textos preparados y los dibuja
-     * en los JLabels.
+     * en los JLabels correspondientes de la interfaz.
+     *
+     * * @param nombre Nombre de la criatura.
+     * @param titulo Tipo o clasificación del monstruo.
+     * @param descHtml Texto descriptivo en formato HTML para soportar saltos de
+     * línea.
+     * @param hp Puntos de vida formateados.
+     * @param atq Puntos de ataque formateados.
+     * @param def Puntos de defensa formateados.
+     * @param vel Puntos de velocidad formateados.
+     * @param rutaImagen Dirección del recurso de la imagen en el proyecto.
      */
     public void mostrarDatosMonstruo(String nombre, String titulo, String descHtml, String hp, String atq, String def, String vel, String rutaImagen) {
         txtNombreCriatura1.setText(nombre);
@@ -40,46 +58,79 @@ public class VistaBestiario extends javax.swing.JFrame {
     // =========================================================================
     //  GETTERS PÚBLICOS EXIGIDOS POR EL MVC (Dan acceso externo a los botones)
     // =========================================================================
+    /**
+     * @return Botón asociado al Basilisco Menor.
+     */
     public javax.swing.JButton getBasiliscoMenor() {
         return basiliscoMenor;
     }
 
+    /**
+     * @return Botón asociado al Cíclope.
+     */
     public javax.swing.JButton getCiclope() {
         return ciclope;
     }
 
+    /**
+     * @return Botón asociado al Fénix de Fuego.
+     */
     public javax.swing.JButton getFenixDeFuego() {
         return fenixDeFuego;
     }
 
+    /**
+     * @return Botón asociado al Golem de Piedra.
+     */
     public javax.swing.JButton getGolemDePiedra() {
         return golemDePiedra;
     }
 
+    /**
+     * @return Botón asociado a la Harpía.
+     */
     public javax.swing.JButton getHarpia() {
         return Harpia;
-    } // Ojo con la mayúscula de tu variable
+    }
 
+    /**
+     * @return Botón asociado a la Hidra de Lerna.
+     */
     public javax.swing.JButton getHidraDeLerna() {
         return HidraDeLerna;
-    } // Ojo con la mayúscula de tu variable
+    }
 
+    /**
+     * @return Botón asociado al Minotauro.
+     */
     public javax.swing.JButton getMinotauro() {
         return Minotauro;
-    } // Ojo con la mayúscula de tu variable
+    }
 
+    /**
+     * @return Botón asociado a la Quimera.
+     */
     public javax.swing.JButton getQuimera() {
         return Quimera;
-    } // Ojo con la mayúscula de tu variable
+    }
 
+    /**
+     * @return Botón asociado a la Sombra Espectral.
+     */
     public javax.swing.JButton getSombraEspectral() {
         return sombraEspectral;
     }
 
+    /**
+     * @return Botón asociado al Dragón Ancestral.
+     */
     public javax.swing.JButton getDragonAncestral() {
         return dragonAncestral;
     }
 
+    /**
+     * @return Botón para regresar al menú de inicio.
+     */
     public javax.swing.JButton getVolverInicio() {
         return volverInicio;
     }

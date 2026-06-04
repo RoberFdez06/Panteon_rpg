@@ -1,19 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vista;
 
 /**
- *
- * @author rober
+ * Interfaz gráfica encargada de representar el menú intermedio de la partida.
+ * Permite al jugador elegir entre seguir avanzando en la run actual, guardar el
+ * progreso o regresar al menú de inicio.
  */
 public class VistaContinuarRun extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaContinuarRun.class.getName());
 
     /**
-     * Creates new form VistaMenuInicial
+     * Constructor de la vista. Inicializa todos los componentes gráficos,
+     * deshabilita el redimensionamiento de la interfaz, la centra en la
+     * pantalla e instancia su respectivo controlador para gestionar la lógica
+     * de los eventos.
      */
     public VistaContinuarRun() {
         initComponents();
@@ -22,14 +22,32 @@ public class VistaContinuarRun extends javax.swing.JFrame {
         new controlador.eventos.ContinuarRunController(this);
     }
 
+    // =========================================================================
+    //  GETTERS PÚBLICOS EXIGIDOS POR EL MVC (Dan acceso externo a los botones)
+    // =========================================================================
+    /**
+     * Proporciona acceso al botón encargado de reanudar el juego.
+     *
+     * @return El componente JButton para continuar la run.
+     */
     public javax.swing.JButton getBtnContinuarRun() {
         return btnContinuarRun;
     }
 
+    /**
+     * Proporciona acceso al botón encargado de salvar la partida actual.
+     *
+     * @return El componente JButton para guardar el progreso.
+     */
     public javax.swing.JButton getBtnGuardarPartida() {
         return btnGuardarPartida;
     }
 
+    /**
+     * Proporciona acceso al botón encargado de abandonar la sesión o volver.
+     *
+     * @return El componente JButton para salir.
+     */
     public javax.swing.JButton getBtnSalir() {
         return btnSalir;
     }

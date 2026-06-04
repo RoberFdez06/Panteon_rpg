@@ -1,15 +1,111 @@
 package vista;
 
+/**
+ * Interfaz gráfica encargada del menú de creación y selección de personaje.
+ * Permite al usuario introducir un nombre de héroe, seleccionar entre las
+ * diferentes clases disponibles (Guerrero, Mago, Tanque, Pícaro, Arquero) e
+ * iniciar una nueva run.
+ */
 public class VistaMenuCreacionPersonaje extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaMenuCreacionPersonaje.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes de la interfaz,
+     * deshabilita el redimensionamiento de la ventana e instancia su respectivo
+     * controlador para delegar la gestión lógica de los eventos según el patrón
+     * MVC.
+     */
     public VistaMenuCreacionPersonaje() {
         initComponents();
         this.setResizable(false);
 
         // [MVC ESTRICTO]: Instancia el controlador específico pasándose a sí mismo
         new controlador.eventos.MenuCreacionPersonajeController(this);
+    }
+
+    /**
+     * Proporciona acceso directo al botón asociado a la clase Guerrero.
+     *
+     * @return El componente JButton para la clase Guerrero.
+     */
+    public javax.swing.JButton getBtnGuerrero() {
+        return btnGuerrero;
+    }
+
+    /**
+     * Proporciona acceso directo al botón asociado a la clase Tanque.
+     *
+     * @return El componente JButton para la clase Tanque.
+     */
+    public javax.swing.JButton getBtnTanque() {
+        return btnTanque;
+    }
+
+    /**
+     * Proporciona acceso directo al botón asociado a la clase Mago.
+     *
+     * @return El componente JButton para la clase Mago.
+     */
+    public javax.swing.JButton getBtnMago() {
+        return btnMago;
+    }
+
+    /**
+     * Proporciona acceso directo al botón asociado a la clase Pícaro.
+     *
+     * @return El componente JButton para la clase Pícaro.
+     */
+    public javax.swing.JButton getBtnPicaro() {
+        return btnPicaro;
+    }
+
+    /**
+     * Proporciona acceso directo al botón asociado a la clase Arquero.
+     *
+     * @return El componente JButton para la clase Arquero.
+     */
+    public javax.swing.JButton getBtnArquero() {
+        return btnArquero;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de comenzar la partida.
+     *
+     * @return El componente JButton para iniciar la run.
+     */
+    public javax.swing.JButton getBtnRun() {
+        return btnRun;
+    }
+
+    /**
+     * Proporciona acceso directo al botón para regresar al menú inicial.
+     *
+     * @return El componente JButton para volver atrás.
+     */
+    public javax.swing.JButton getVolverInicio() {
+        return volverInicio;
+    }
+
+    /**
+     * Proporciona acceso al campo de texto donde el usuario introduce el nombre
+     * de su personaje.
+     *
+     * @return El componente JTextField con el nombre introducido.
+     */
+    public javax.swing.JTextField getTxtInputField() {
+        return jTextField1;
+    }
+
+    /**
+     * Modifica el contenido de la etiqueta de texto encargada de mostrar de
+     * forma visual la clase que el jugador tiene seleccionada actualmente.
+     *
+     * @param textoClase Cadena de texto que describe la clase seleccionada (ej.
+     * "Guerrero").
+     */
+    public void setLabelClaseSeleccionada(String textoClase) {
+        seleccionPersonaje.setText(textoClase);
     }
 
     /**
@@ -149,43 +245,6 @@ public class VistaMenuCreacionPersonaje extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new VistaMenuCreacionPersonaje().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnGuerrero() {
-        return btnGuerrero;
-    }
-
-    public javax.swing.JButton getBtnTanque() {
-        return btnTanque;
-    }
-
-    public javax.swing.JButton getBtnMago() {
-        return btnMago;
-    }
-
-    public javax.swing.JButton getBtnPicaro() {
-        return btnPicaro;
-    }
-
-    public javax.swing.JButton getBtnArquero() {
-        return btnArquero;
-    }
-
-    public javax.swing.JButton getBtnRun() {
-        return btnRun;
-    }
-
-    public javax.swing.JButton getVolverInicio() {
-        return volverInicio;
-    }
-
-    public javax.swing.JTextField getTxtInputField() {
-        return jTextField1;
-    }
-
-    public void setLabelClaseSeleccionada(String textoClase) {
-        seleccionPersonaje.setText(textoClase);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArquero;
     private javax.swing.JButton btnGuerrero;

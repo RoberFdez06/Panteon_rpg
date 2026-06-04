@@ -1,15 +1,86 @@
 package vista;
 
+/**
+ * Interfaz gráfica que representa el menú principal o de inicio del juego.
+ * Permite al usuario navegar hacia una nueva partida, reanudar un progreso
+ * previo, consultar el bestiario, el cementerio, ver el lore o salir de la
+ * aplicación.
+ */
 public class VistaMenuInicial extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaMenuInicial.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes de la interfaz,
+     * deshabilita el redimensionamiento de la ventana e instancia su respectivo
+     * controlador para delegar la gestión lógica de los eventos según el patrón
+     * MVC.
+     */
     public VistaMenuInicial() {
         initComponents();
         this.setResizable(false);
 
         // [MVC ESTRICTO]: El control se cede por completo al controlador específico
         new controlador.eventos.MenuInicialController(this);
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de iniciar una nueva
+     * partida.
+     *
+     * @return El componente JButton para comenzar una nueva partida.
+     */
+    public javax.swing.JButton getBtnNuevaPartida() {
+        return btnNuevaPartida;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de reanudar una partida
+     * guardada.
+     *
+     * @return El componente JButton para continuar el progreso previo.
+     */
+    public javax.swing.JButton getBtnReanudarPartida() {
+        return btnReanudarPartida;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de abrir la pantalla del
+     * bestiario.
+     *
+     * @return El componente JButton para acceder al libro de criaturas.
+     */
+    public javax.swing.JButton getBtnBestiario() {
+        return btnBestiario;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de abrir la pantalla del
+     * cementerio.
+     *
+     * @return El componente JButton para consultar los héroes caídos.
+     */
+    public javax.swing.JButton getBtnCementerio() {
+        return btnCementerio;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de cerrar la aplicación.
+     *
+     * @return El componente JButton configurado para salir del juego.
+     */
+    public javax.swing.JButton getBtnSalir() {
+        return btnSalir;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de desplegar u ocultar el
+     * lore del juego.
+     *
+     * @return El componente JButton para ver la historia contextual.
+     */
+    public javax.swing.JButton getBtnVerLore() {
+        return btnVerLore;
     }
 
     /**
@@ -110,31 +181,6 @@ public class VistaMenuInicial extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new VistaMenuInicial().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnNuevaPartida() {
-        return btnNuevaPartida;
-    }
-
-    public javax.swing.JButton getBtnReanudarPartida() {
-        return btnReanudarPartida;
-    }
-
-    public javax.swing.JButton getBtnBestiario() {
-        return btnBestiario;
-    }
-
-    public javax.swing.JButton getBtnCementerio() {
-        return btnCementerio;
-    }
-
-    public javax.swing.JButton getBtnSalir() {
-        return btnSalir;
-    }
-
-    public javax.swing.JButton getBtnVerLore() {
-        return btnVerLore;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBestiario;
     private javax.swing.JButton btnCementerio;

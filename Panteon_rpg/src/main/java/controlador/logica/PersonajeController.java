@@ -2,11 +2,18 @@ package controlador.logica;
 
 import modelo.Personaje;
 
+/**
+ * Controlador encargado de gestionar el estado lógico y los atributos del
+ * personaje durante la partida.
+ */
 public class PersonajeController {
 
     private Personaje personajeActual;
 
-    // Método para inicializar el personaje cuando lo cargas de la BD
+    /**
+     * Inicializa o actualiza los datos del personaje con la información
+     * proveniente de la base de datos.
+     */
     public void cargarPersonaje(int id, int partida_id, String nombre, String clase, int nivel,
             int experiencia, int hp_max, int hp_actual, int ataque,
             int defensa, int velocidad, int suerte, int estamina_max,
@@ -17,7 +24,12 @@ public class PersonajeController {
                 suerte, estamina_max, estamina_actual);
     }
 
-    // Método para aplicar daño (lógica de combate)
+    /**
+     * Aplica daño al personaje reduciendo su vida actual, asegurando que esta
+     * no sea menor a cero.
+     *
+     * @param cantidad Cantidad de puntos de daño a restar.
+     */
     public void recibirDano(int cantidad) {
         if (personajeActual != null) {
             int nuevaVida = personajeActual.getHp_actual() - cantidad;
@@ -25,6 +37,11 @@ public class PersonajeController {
         }
     }
 
+    /**
+     * Obtiene la instancia del modelo de personaje actual.
+     *
+     * @return El objeto Personaje cargado en el controlador.
+     */
     public Personaje getPersonaje() {
         return personajeActual;
     }

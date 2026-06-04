@@ -5,11 +5,19 @@ import java.util.Map;
 import vista.VistaBestiario;
 import java.text.Normalizer;
 
+/**
+ * Controlador encargado de gestionar la lógica de visualización y navegación del bestiario.
+ * Filtra y presenta los monstruos descubiertos por el jugador según los datos de persistencia.
+ */
 public class BestiarioController {
 
     private VistaBestiario vista;
     private AccionUsuarioController ctrlPrincipal;
 
+    /**
+     * Inicializa el controlador con la vista asociada y carga el índice de monstruos.
+     * @param vista Instancia de la vista del bestiario.
+     */
     public BestiarioController(VistaBestiario vista) {
         this.vista = vista;
         this.ctrlPrincipal = AccionUsuarioController.getInstancia();
@@ -18,6 +26,11 @@ public class BestiarioController {
         inicializarEventos();
     }
 
+    /**
+     * Normaliza cadenas de texto eliminando acentos y convirtiendo a minúsculas para comparaciones.
+     * @param texto Cadena original.
+     * @return Cadena normalizada.
+     */
     private String normalizar(String texto) {
         if (texto == null) {
             return "";
@@ -26,6 +39,9 @@ public class BestiarioController {
         return nfdNormalizedString.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "").toLowerCase().trim();
     }
 
+    /**
+     * Configura los listeners de los botones para la interacción en la vista.
+     */
     private void inicializarEventos() {
         vista.getBasiliscoMenor().addActionListener(e -> procesarClickMonstruo("Basilisco Menor"));
         vista.getCiclope().addActionListener(e -> procesarClickMonstruo("Cíclope"));
@@ -44,6 +60,10 @@ public class BestiarioController {
         });
     }
 
+    /**
+     * Actualiza el estado de los botones del bestiario según los monstruos descubiertos.
+     * @param monstruosDescubiertos Conjunto de nombres de monstruos ya avistados.
+     */
     public void procesarYActualizarIndice(Set<String> monstruosDescubiertos) {
         configurarBoton(vista.getBasiliscoMenor(), "Basilisco Menor", "basilisco menor", monstruosDescubiertos);
         configurarBoton(vista.getCiclope(), "Cíclope", "ciclope", monstruosDescubiertos);
@@ -57,6 +77,9 @@ public class BestiarioController {
         configurarBoton(vista.getDragonAncestral(), "Dragón Ancestral", "dragon ancestral", monstruosDescubiertos);
     }
 
+    /**
+     * Define el texto y la habilitación de los botones del bestiario.
+     */
     private void configurarBoton(javax.swing.JButton boton, String nombreReal, String claveBusqueda, Set<String> descubiertos) {
         boolean encontrado = false;
         String claveNorm = normalizar(claveBusqueda);
@@ -72,11 +95,14 @@ public class BestiarioController {
         boton.setEnabled(encontrado);
     }
 
+    /**
+     * Consulta los datos del monstruo y solicita a la vista su despliegue.
+     * @param nombreMonstruo Nombre del monstruo clicado.
+     */
     private void procesarClickMonstruo(String nombreMonstruo) {
         Map<String, Object> datos = ctrlPrincipal.consultarDatosMonstruo(nombreMonstruo);
 
         if (datos.isEmpty()) {
-            System.err.println("DEBUG: No se encontraron datos en BD para: " + nombreMonstruo);
             return;
         }
 

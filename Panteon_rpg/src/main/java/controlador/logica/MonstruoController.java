@@ -4,6 +4,10 @@ import modelo.ConsultasRPG;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controlador de lógica para los monstruos. Gestiona la carga de datos desde la
+ * base de datos y el estado vital del enemigo durante el combate.
+ */
 public class MonstruoController {
 
     private int id;
@@ -12,7 +16,12 @@ public class MonstruoController {
     private int hpActual;
     private int ataque;
 
-    // Llama a la BD, elige un monstruo al azar y guarda sus datos temporalmente
+    /**
+     * Carga un monstruo aleatorio desde la base de datos y establece sus
+     * valores iniciales.
+     *
+     * @return true si la carga fue exitosa, false en caso contrario.
+     */
     public boolean cargarMonstruoAleatorio() {
         ConsultasRPG consultas = new ConsultasRPG();
         ResultSet rs = consultas.obtenerMonstruoAleatorio();
@@ -35,8 +44,11 @@ public class MonstruoController {
     }
 
     /**
-     * [NUEVO] Carga un monstruo específico desde la base de datos filtrando por
-     * su nombre.
+     * Carga un monstruo específico de la base de datos filtrando por su nombre.
+     *
+     * @param nombreBuscado El nombre del monstruo a buscar.
+     * @return true si se encontró y cargó correctamente, false en caso
+     * contrario.
      */
     public boolean cargarMonstruoPorNombre(String nombreBuscado) {
         try {
@@ -67,12 +79,20 @@ public class MonstruoController {
         return false;
     }
 
-    // Método para cuando el héroe le pega al monstruo
+    /**
+     * Aplica daño al monstruo, reduciendo sus puntos de vida.
+     *
+     * @param cantidad Cantidad de daño recibido.
+     */
     public void recibirDano(int cantidad) {
         this.hpActual = Math.max(0, this.hpActual - cantidad);
     }
 
-    // Comprueba si el monstruo ha muerto
+    /**
+     * Determina si el monstruo ha sido derrotado.
+     *
+     * @return true si la vida actual es menor o igual a cero.
+     */
     public boolean estaMuerto() {
         return this.hpActual <= 0;
     }
@@ -98,7 +118,7 @@ public class MonstruoController {
         return ataque;
     }
 
-    // --- [NUEVOS] SETTERS PARA ESCALADO DE JEFES ---
+    // --- SETTERS ---
     public void setHpMax(int hpMax) {
         this.hpMax = hpMax;
     }

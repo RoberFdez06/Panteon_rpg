@@ -3,17 +3,27 @@ package controlador.navegacion;
 import vista.*;
 import javax.swing.JFrame;
 
+/**
+ * Controlador de navegación centralizado implementado como Singleton. Gestiona
+ * el ciclo de vida de las vistas, encargándose de cerrar la ventana actual y
+ * mostrar la nueva ventana de manera ordenada.
+ */
 public class NavegacionController {
 
-    // 1. Añadimos la variable estática privada para guardar la única instancia
     private static NavegacionController instancia;
     private JFrame vistaActual;
 
-    // 2. Volvemos el constructor privado para que nadie pueda hacer un "new NavegacionController()" fuera de aquí
+    /**
+     * Constructor privado para garantizar el patrón Singleton.
+     */
     private NavegacionController() {
     }
 
-    // 3. Creamos el método público getInstancia() que te estaba dando el error
+    /**
+     * Obtiene la instancia única del controlador de navegación.
+     *
+     * @return La instancia única de NavegacionController.
+     */
     public static NavegacionController getInstancia() {
         if (instancia == null) {
             instancia = new NavegacionController();
@@ -21,7 +31,12 @@ public class NavegacionController {
         return instancia;
     }
 
-    // Método para cambiar de pantalla
+    /**
+     * Realiza la transición entre la vista actual y una nueva vista. Cierra la
+     * ventana existente, centra la nueva y la pone en primer plano.
+     *
+     * @param nuevaVista La vista que se desea mostrar.
+     */
     public void cambiarVista(JFrame nuevaVista) {
         if (vistaActual != null) {
             vistaActual.dispose();
@@ -33,7 +48,7 @@ public class NavegacionController {
         this.vistaActual.requestFocus();
     }
 
-    // --- Métodos específicos de navegación ---
+    // --- Métodos de navegación a vistas específicas ---
     public void irACreacionPersonaje() {
         cambiarVista(new VistaMenuCreacionPersonaje());
     }

@@ -4,11 +4,22 @@ import vista.VistaCombates;
 import controlador.logica.MonstruoController;
 import modelo.Personaje;
 
+/**
+ * Controlador encargado de gestionar la lógica y eventos de la pantalla de
+ * combate. Coordina las interacciones entre el héroe y el monstruo, así como la
+ * actualización de la interfaz gráfica.
+ */
 public class CombatesController {
 
     private VistaCombates vista;
     private AccionUsuarioController ctrlPrincipal;
 
+    /**
+     * Inicializa el controlador de combates, actualiza la vista inicial y
+     * configura los eventos.
+     *
+     * @param vista La vista de combate asociada.
+     */
     public CombatesController(VistaCombates vista) {
         this.vista = vista;
         this.ctrlPrincipal = AccionUsuarioController.getInstancia();
@@ -17,10 +28,11 @@ public class CombatesController {
         inicializarEventos();
     }
 
+    /**
+     * Configura los listeners para los componentes interactivos de la vista.
+     */
     private void inicializarEventos() {
-        // 1. Lógica del botón ATACAR
         vista.getBtnAtaque().addActionListener(e -> {
-            // Deshabilitamos el botón para evitar spam
             vista.getBtnAtaque().setEnabled(false);
 
             MonstruoController m = ctrlPrincipal.getMonstruoActual();
@@ -31,13 +43,11 @@ public class CombatesController {
                 return;
             }
 
-            // PASO 1: ATAQUE DEL HÉROE
             int vidaAntesMonstruo = m.getHpActual();
             m.recibirDano(heroe.getAtaque());
             int danoRealizado = vidaAntesMonstruo - m.getHpActual();
             actualizarPantallaCombate("¡Atacas al enemigo y le infliges " + danoRealizado + " puntos de daño!");
 
-            // PASO 2: TURNO ENEMIGO (Temporizado)
             javax.swing.Timer timerEnemigo = new javax.swing.Timer(1000, evt -> {
                 if (m.estaMuerto()) {
                     manejarFinDelCombate(true);
@@ -46,12 +56,11 @@ public class CombatesController {
                     heroe.setHp_actual(Math.max(0, heroe.getHp_actual() - danoAlHeroe));
                     actualizarPantallaCombate("¡El enemigo contraataca y te inflige " + danoAlHeroe + " puntos de daño!");
 
-                    // PASO 3: REVISAR DERROTA
                     javax.swing.Timer timerFinal = new javax.swing.Timer(1000, evtFinal -> {
                         if (heroe.getHp_actual() <= 0) {
                             manejarFinDelCombate(false);
                         } else {
-                            vista.getBtnAtaque().setEnabled(true); // Reactivamos
+                            vista.getBtnAtaque().setEnabled(true);
                         }
                     });
                     timerFinal.setRepeats(false);
@@ -60,9 +69,8 @@ public class CombatesController {
             });
             timerEnemigo.setRepeats(false);
             timerEnemigo.start();
-        }); // <-- Cierre correcto del addActionListener
+        });
 
-        // 2. Funcionalidad del JLabel 'txtPiso'
         if (vista.getTxtPiso() != null) {
             vista.getTxtPiso().addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
@@ -89,25 +97,30 @@ public class CombatesController {
     }
 
     /**
-     * Espera 1 segundo mostrando el estado final en pantalla antes de redirigir
-     * a la vista de Victoria o Derrota delegando en AccionUsuarioController.
+     * Maneja el desenlace del combate tras una espera controlada.
+     *
+     * @param esVictoria Indica si el jugador ganó el encuentro.
      */
     private void manejarFinDelCombate(boolean esVictoria) {
         javax.swing.Timer timerTransicion = new javax.swing.Timer(1000, e -> {
-            // clickAtacar se encarga de evaluar la vida del monstruo/héroe y cambiar la pantalla
             ctrlPrincipal.clickAtacar();
         });
         timerTransicion.setRepeats(false);
         timerTransicion.start();
     }
 
+    /**
+     * Sincroniza el estado lógico de los personajes con la interfaz gráfica.
+     *
+     * @param mensajeLog Mensaje que se mostrará en el log de combate.
+     */
     private void actualizarPantallaCombate(String mensajeLog) {
         Personaje heroe = ctrlPrincipal.getHeroeActual();
         MonstruoController monstruo = ctrlPrincipal.getMonstruoActual();
 
         int numeroPiso = ctrlPrincipal.getPisoActual();
         vista.setPiso("Piso: " + numeroPiso);
-        
+
         String txtVidaHeroe = "Vida Héroe: --/--";
         if (heroe != null) {
             txtVidaHeroe = heroe.getNombre() + " (HP: " + heroe.getHp_actual() + "/" + heroe.getHp_max() + ")";
@@ -158,7 +171,6 @@ public class CombatesController {
                     rutaImagen = carpeta + "DragonAncestralSinFondoV1Escalado.png";
                     break;
                 default:
-                    System.out.println("DEBUG: Imagen no encontrada para: " + parseado);
                     rutaImagen = carpeta + "SombraEspectralSinFondoV1Escalado.png";
                     break;
             }

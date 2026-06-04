@@ -1,9 +1,21 @@
 package vista;
 
+/**
+ * Interfaz gráfica encargada de representar la pantalla de combate del juego.
+ * Muestra dinámicamente las estadísticas de salud del héroe y del enemigo, el
+ * piso actual, las ilustraciones de las criaturas y la bitácora con la
+ * información del combate.
+ */
 public class VistaCombates extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCombates.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes de la interfaz,
+     * bloquea el redimensionamiento de la ventana, ajusta opacidades visuales y
+     * vincula el controlador específico de la escena para gestionar los
+     * eventos.
+     */
     public VistaCombates() {
         initComponents();
         this.setResizable(false);
@@ -14,17 +26,37 @@ public class VistaCombates extends javax.swing.JFrame {
         new controlador.eventos.CombatesController(this);
     }
 
+    /**
+     * Proporciona acceso directo a la etiqueta de texto encargada de mostrar el
+     * piso actual.
+     *
+     * @return El componente JLabel que contiene el texto informativo del piso.
+     */
     public javax.swing.JLabel getTxtPiso() {
         return txtPiso;
     }
 
+    /**
+     * Modifica el contenido de texto mostrado en la etiqueta informativa del
+     * piso actual.
+     *
+     * @param textoPiso Cadena de texto formateada que describe el piso (ej.
+     * "PISO 1").
+     */
     public void setPiso(String textoPiso) {
         txtPiso.setText(textoPiso);
     }
 
     /**
      * Permite al controlador actualizar la información gráfica de la interfaz
-     * sin romper el MVC.
+     * en cada turno de la simulación sin romper el patrón de arquitectura MVC.
+     *
+     * * @param vidaH Cadena de texto con la vida actual y máxima del héroe.
+     * @param vidaM Cadena de texto con la vida actual y máxima del monstruo.
+     * @param infoCombate Mensaje informativo que detalla las acciones del
+     * turno.
+     * @param rutaImgMonstruo Ruta del recurso que apunta al gráfico ilustrativo
+     * del enemigo.
      */
     public void refrescarDatosInterfaz(String vidaH, String vidaM, String infoCombate, String rutaImgMonstruo) {
         vidaPersonaje.setText(vidaH);
@@ -41,6 +73,18 @@ public class VistaCombates extends javax.swing.JFrame {
                 System.err.println("Error cargando imagen de criatura en combate: " + e.getMessage());
             }
         }
+    }
+
+    /**
+     * Proporciona acceso directo al botón de ataque utilizado en la interfaz.
+     * Exigido por el modelo Vista-Controlador para la correcta delegación de
+     * eventos de pulsación.
+     *
+     * @return El componente JButton configurado para realizar la acción de
+     * ataque.
+     */
+    public javax.swing.JButton getBtnAtaque() {
+        return ataque;
     }
 
     /**
@@ -124,11 +168,6 @@ public class VistaCombates extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new VistaCombates().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnAtaque() {
-        return ataque;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ataque;
     private javax.swing.JLabel fondo;

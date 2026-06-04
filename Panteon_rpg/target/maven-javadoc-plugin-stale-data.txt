@@ -1,0 +1,55 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-classpath
+'C:/Users/rober/.m2/repository/mysql/mysql-connector-java/8.0.30/mysql-connector-java-8.0.30.jar;C:/Users/rober/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar;C:/Users/rober/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE280/AbsoluteLayout-RELEASE280.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+25
+-sourcepath
+'C:/Users/rober/Desktop/Panteon_rpg/Panteon_rpg/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/rober/Desktop/Panteon_rpg/Panteon_rpg/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Panteon_rpg 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Panteon_rpg 1.0-SNAPSHOT API'
+controlador.eventos
+controlador.logica
+controlador.navegacion
+controlador.persistencia
+modelo
+mvp
+vista
+C:\Users\rober\.m2\repository\mysql\mysql-connector-java\8.0.30\mysql-connector-java-8.0.30.jar = 1780328218440
+C:\Users\rober\.m2\repository\com\google\protobuf\protobuf-java\3.19.4\protobuf-java-3.19.4.jar = 1780328218527
+C:\Users\rober\.m2\repository\org\netbeans\external\AbsoluteLayout\RELEASE280\AbsoluteLayout-RELEASE280.jar = 1780222888770
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java = 1780507914750
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\allclasses-index.html = 1780573359563
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\allpackages-index.html = 1780573359565
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\element-list = 1780573359364
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\help-doc.html = 1780573359600
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\index-all.html = 1780573359591
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\index.html = 1780573359545
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\member-search-index.js = 1780573359569
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\module-search-index.js = 1780573359566
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\overview-summary.html = 1780573359596
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\overview-tree.html = 1780573359542
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\package-search-index.js = 1780573359567
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\search.html = 1780573359594
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\serialized-form.html = 1780573359431
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\tag-search-index.js = 1780573359570
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\target\reports\apidocs\type-search-index.js = 1780573359568

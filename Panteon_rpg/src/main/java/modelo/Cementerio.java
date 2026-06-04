@@ -1,5 +1,9 @@
 package modelo;
 
+/**
+ * Clase que representa un registro en el cementerio del juego. Almacena la
+ * información de los héroes caídos tras finalizar una partida.
+ */
 public class Cementerio {
 
     private int id;
@@ -11,6 +15,19 @@ public class Cementerio {
     private String asesino;
     private String epitafio;
 
+    /**
+     * Constructor para inicializar una nueva instancia de registro de
+     * cementerio.
+     *
+     * * @param id Identificador único del registro.
+     * @param nombre_heroe Nombre del héroe.
+     * @param clase Clase del héroe.
+     * @param nivel_alcanzado Nivel alcanzado por el héroe antes de morir.
+     * @param piso_final Piso en el que ocurrió la derrota.
+     * @param estado Estado de la partida (ej. "Derrota").
+     * @param asesino Nombre del monstruo que causó la derrota.
+     * @param epitafio Mensaje conmemorativo final.
+     */
     public Cementerio(int id, String nombre_heroe, String clase, int nivel_alcanzado,
             int piso_final, String estado, String asesino, String epitafio) {
         this.id = id;
@@ -23,6 +40,7 @@ public class Cementerio {
         this.epitafio = epitafio;
     }
 
+    // --- Getters y Setters ---
     public int getId() {
         return id;
     }

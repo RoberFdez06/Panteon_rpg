@@ -1,5 +1,10 @@
 package modelo;
 
+/**
+ * Clase que representa al héroe controlado por el jugador en la partida.
+ * Contiene todas sus estadísticas de combate, nivel, experiencia y estado
+ * actual.
+ */
 public class Personaje {
 
     private int id;
@@ -17,6 +22,10 @@ public class Personaje {
     private int estamina_max;
     private int estamina_actual;
 
+    /**
+     * Constructor por defecto que inicializa un personaje con estadísticas base
+     * genéricas.
+     */
     public Personaje() {
         this.id = 0;
         this.partida_id = 0;
@@ -34,6 +43,31 @@ public class Personaje {
         this.estamina_actual = 50;
     }
 
+    /**
+     * Constructor parametrizado para inicializar un personaje con todas sus
+     * estadísticas completas (utilizado habitualmente al cargar datos desde la
+     * base de datos).
+     *
+     * @param id Identificador único del personaje en la base de datos.
+     * @param partida_id ID de la partida a la que pertenece el personaje.
+     * @param nombre Nombre asignado al héroe.
+     * @param clase Clase o profesión elegida (ej. Guerrero, Mago).
+     * @param nivel Nivel de progreso actual del héroe.
+     * @param experiencia Puntos de experiencia acumulados en el nivel actual.
+     * @param hp_max Puntos de salud máximos permitidos.
+     * @param hp_actual Puntos de salud que posee actualmente el personaje.
+     * @param ataque Poder ofensivo base para calcular el daño físico o mágico.
+     * @param defensa Atributo defensivo que mitiga el daño recibido de los
+     * enemigos.
+     * @param velocidad Determina el orden de los turnos en el sistema de
+     * combate.
+     * @param suerte Influye en la probabilidad de golpes críticos y eventos
+     * fortuitos.
+     * @param estamina_max Puntos de estamina máximos para realizar acciones
+     * especiales.
+     * @param estamina_actual Cantidad de estamina disponible en el momento
+     * actual.
+     */
     public Personaje(int id, int partida_id, String nombre, String clase, int nivel, int experiencia,
             int hp_max, int hp_actual, int ataque, int defensa, int velocidad, int suerte,
             int estamina_max, int estamina_actual) {
@@ -53,7 +87,7 @@ public class Personaje {
         this.estamina_actual = estamina_actual;
     }
 
-    // Getters y Setters
+    // --- Getters y Setters ---
     public int getId() {
         return id;
     }

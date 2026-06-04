@@ -1,13 +1,34 @@
 package vista;
 
+/**
+ * Interfaz gráfica encargada de representar la pantalla de victoria del juego.
+ * Se muestra cuando el jugador ha superado la run con éxito, permitiéndole
+ * interactuar para avanzar o regresar a los menús principales.
+ */
 public class VistaHasGanado extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaHasGanado.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes de la interfaz,
+     * bloquea el redimensionamiento de la ventana e instancia su respectivo
+     * controlador para gestionar los eventos de interacción.
+     */
     public VistaHasGanado() {
         initComponents();
         this.setResizable(false);
         new controlador.eventos.HasGanadoController(this);
+    }
+
+    /**
+     * Proporciona acceso directo al botón de continuar en la pantalla de
+     * victoria. Exigido por el modelo Vista-Controlador para la correcta
+     * delegación de eventos.
+     *
+     * @return El componente JButton para continuar tras ganar la partida.
+     */
+    public javax.swing.JButton getBtnContinuar() {
+        return btnContinuar;
     }
 
     /**
@@ -61,11 +82,6 @@ public class VistaHasGanado extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VistaHasGanado().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnContinuar() {
-        return btnContinuar;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;
     private javax.swing.JLabel fondoHasGanado;

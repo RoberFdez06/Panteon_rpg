@@ -1,13 +1,202 @@
 package vista;
 
+/**
+ * Interfaz gráfica encargada de representar el menú de gestión de partidas
+ * guardadas. Permite visualizar el estado de diferentes ranuras de guardado
+ * (información del héroe, clase, piso y nivel) y realizar acciones como cargar
+ * o borrar partidas.
+ */
 public class VistaMenuPartidas extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaMenuPartidas.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa todos los componentes de la interfaz,
+     * deshabilita el redimensionamiento de la ventana e instancia su respectivo
+     * controlador para delegar la gestión lógica de los eventos según el patrón
+     * MVC.
+     */
     public VistaMenuPartidas() {
         initComponents();
         this.setResizable(false);
         new controlador.eventos.MenuPartidasController(this);
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de cargar la partida
+     * seleccionada.
+     *
+     * @return El componente JButton para cargar la partida.
+     */
+    public javax.swing.JButton getBtnCargarPartida() {
+        return btnCargarPartida;
+    }
+
+    /**
+     * Proporciona acceso directo al botón encargado de eliminar la partida
+     * seleccionada.
+     *
+     * @return El componente JButton para borrar la partida.
+     */
+    public javax.swing.JButton getBtnBorrarPartida() {
+        return btnBorrarPartida;
+    }
+
+    /**
+     * Proporciona acceso directo al botón para regresar al menú de inicio.
+     *
+     * @return El componente JButton para volver atrás.
+     */
+    public javax.swing.JButton getVolverInicio() {
+        return volverInicio;
+    }
+
+    /**
+     * Proporciona acceso al campo de texto que maneja el nombre identificativo
+     * de la partida.
+     *
+     * @return El componente JTextField asociado al nombre de la partida.
+     */
+    public javax.swing.JTextField getTxtNombrePartida() {
+        return txtNombrePartida1;
+    }
+
+    // =========================================================================
+    //  RANURA DE GUARDADO 1 - ETICUETAS INFORMATIVAS
+    // =========================================================================
+    /**
+     * @return Etiqueta del título o ID de la partida en la ranura 1.
+     */
+    public javax.swing.JLabel getTxtPartida() {
+        return txtPartida;
+    }
+
+    /**
+     * @return Etiqueta con el nombre del héroe de la ranura 1.
+     */
+    public javax.swing.JLabel getTxtHeroe() {
+        return txtHeroe;
+    }
+
+    /**
+     * @return Etiqueta con la clase del personaje de la ranura 1.
+     */
+    public javax.swing.JLabel getTxtClase() {
+        return txtClase;
+    }
+
+    /**
+     * @return Etiqueta con el piso alcanzado en la ranura 1.
+     */
+    public javax.swing.JLabel getTxtPiso() {
+        return txtPiso;
+    }
+
+    /**
+     * @return Etiqueta con el nivel del personaje en la ranura 1.
+     */
+    public javax.swing.JLabel getTxtNivel() {
+        return txtNivel;
+    }
+
+    // =========================================================================
+    //  RANURA DE GUARDADO 2 - ETIQUETAS INFORMATIVAS
+    // =========================================================================
+    /**
+     * @return Etiqueta del título o ID de la partida en la ranura 2.
+     */
+    public javax.swing.JLabel getTxtPartida1() {
+        return txtPartida1;
+    }
+
+    /**
+     * @return Etiqueta con el nombre del héroe de la ranura 2.
+     */
+    public javax.swing.JLabel getTxtHeroe1() {
+        return txtHeroe1;
+    }
+
+    /**
+     * @return Etiqueta con la clase del personaje de la ranura 2.
+     */
+    public javax.swing.JLabel getTxtClase1() {
+        return txtClase1;
+    }
+
+    /**
+     * @return Etiqueta con el piso alcanzado en la ranura 2.
+     */
+    public javax.swing.JLabel getTxtPiso1() {
+        return txtPiso1;
+    }
+
+    /**
+     * @return Etiqueta con el nivel del personaje en la ranura 2.
+     */
+    public javax.swing.JLabel getTxtNivel1() {
+        return txtNivel1;
+    }
+
+    // =========================================================================
+    //  RANURA DE GUARDADO 3 - ETIQUETAS INFORMATIVAS
+    // =========================================================================
+    /**
+     * @return Etiqueta del título o ID de la partida en la ranura 3.
+     */
+    public javax.swing.JLabel getTxtPartida2() {
+        return txtPartida2;
+    }
+
+    /**
+     * @return Etiqueta con el nombre del héroe de la ranura 3.
+     */
+    public javax.swing.JLabel getTxtHeroe2() {
+        return txtHeroe2;
+    }
+
+    /**
+     * @return Etiqueta con la clase del personaje de la ranura 3.
+     */
+    public javax.swing.JLabel getTxtClase2() {
+        return txtClase2;
+    }
+
+    /**
+     * @return Etiqueta con el piso alcanzado en la ranura 3.
+     */
+    public javax.swing.JLabel getTxtPiso2() {
+        return txtPiso2;
+    }
+
+    /**
+     * @return Etiqueta con el nivel del personaje en la ranura 3.
+     */
+    public javax.swing.JLabel getTxtNivel2() {
+        return txtNivel2;
+    }
+
+    // =========================================================================
+    //  CONTENEDORES (PANELS) DE LAS RANURAS PARA CAPTURA DE SELECCIÓN
+    // =========================================================================
+    /**
+     * @return El panel contenedor de los datos de la primera partida guardada.
+     */
+    public javax.swing.JPanel getPanelGuardados1() {
+        return panelGuardados1;
+    }
+
+    /**
+     * @return El panel contenedor de los datos de la segunda partida guardada.
+     */
+    public javax.swing.JPanel getPanelGuardados2() {
+        return panelGuardados2;
+    }
+
+    /**
+     * @return El panel contenedor de los datos de la tercera partida guardada.
+     */
+    public javax.swing.JPanel getPanelGuardados3() {
+        return panelGuardados3;
     }
 
     /**
@@ -174,97 +363,6 @@ public class VistaMenuPartidas extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new VistaMenuPartidas().setVisible(true));
     }
-
-    public javax.swing.JButton getBtnCargarPartida() {
-        return btnCargarPartida;
-    }
-
-    public javax.swing.JButton getBtnBorrarPartida() {
-        return btnBorrarPartida;
-    }
-
-    public javax.swing.JButton getVolverInicio() {
-        return volverInicio;
-    }
-
-    public javax.swing.JTextField getTxtNombrePartida() {
-        return txtNombrePartida1;
-    }
-
-    public javax.swing.JLabel getTxtPartida() {
-        return txtPartida;
-    }
-
-    public javax.swing.JLabel getTxtHeroe() {
-        return txtHeroe;
-    }
-
-    public javax.swing.JLabel getTxtClase() {
-        return txtClase;
-    }
-
-    public javax.swing.JLabel getTxtPiso() {
-        return txtPiso;
-    }
-
-    public javax.swing.JLabel getTxtNivel() {
-        return txtNivel;
-    }
-
-    // --- RANURA 2 ---
-    public javax.swing.JLabel getTxtPartida1() {
-        return txtPartida1;
-    }
-
-    public javax.swing.JLabel getTxtHeroe1() {
-        return txtHeroe1;
-    }
-
-    public javax.swing.JLabel getTxtClase1() {
-        return txtClase1;
-    }
-
-    public javax.swing.JLabel getTxtPiso1() {
-        return txtPiso1;
-    }
-
-    public javax.swing.JLabel getTxtNivel1() {
-        return txtNivel1;
-    }
-
-    // --- RANURA 3 ---
-    public javax.swing.JLabel getTxtPartida2() {
-        return txtPartida2;
-    }
-
-    public javax.swing.JLabel getTxtHeroe2() {
-        return txtHeroe2;
-    }
-
-    public javax.swing.JLabel getTxtClase2() {
-        return txtClase2;
-    }
-
-    public javax.swing.JLabel getTxtPiso2() {
-        return txtPiso2;
-    }
-
-    public javax.swing.JLabel getTxtNivel2() {
-        return txtNivel2;
-    }
-
-    public javax.swing.JPanel getPanelGuardados1() {
-        return panelGuardados1;
-    }
-
-    public javax.swing.JPanel getPanelGuardados2() {
-        return panelGuardados2;
-    }
-
-    public javax.swing.JPanel getPanelGuardados3() {
-        return panelGuardados3;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrarPartida;
     private javax.swing.JButton btnCargarPartida;

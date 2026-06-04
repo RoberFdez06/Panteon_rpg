@@ -11,19 +11,34 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import vista.VistaMenuInicial;
 
+/**
+ * Controlador encargado de gestionar la interfaz del menú principal. Maneja la
+ * navegación hacia las distintas secciones del juego y la visualización de la
+ * historia (Lore).
+ */
 public class MenuInicialController {
 
     private VistaMenuInicial vista;
     private AccionUsuarioController ctrlPrincipal;
-    // Ruta relativa apuntando a la carpeta de tu proyecto
+
+    // Ruta relativa apuntando a la carpeta de recursos del proyecto
     private final String rutaLore = "src/main/java/txt/LorePanteon_rpg.txt";
 
+    /**
+     * Inicializa el controlador con la vista asociada y establece la conexión
+     * con el controlador principal.
+     *
+     * @param vista Instancia de la vista del menú inicial.
+     */
     public MenuInicialController(VistaMenuInicial vista) {
         this.vista = vista;
         this.ctrlPrincipal = AccionUsuarioController.getInstancia();
         inicializarEventos();
     }
 
+    /**
+     * Configura los listeners para todos los botones del menú inicial.
+     */
     private void inicializarEventos() {
         vista.getBtnNuevaPartida().addActionListener(e -> ctrlPrincipal.clickNuevaPartida());
         vista.getBtnReanudarPartida().addActionListener(e -> ctrlPrincipal.clickReanudarPartida());
@@ -31,19 +46,18 @@ public class MenuInicialController {
         vista.getBtnCementerio().addActionListener(e -> ctrlPrincipal.clickAbrirCementerio());
         vista.getBtnSalir().addActionListener(e -> ctrlPrincipal.clickSalirJuego());
 
-        // [NUEVO] Listener para el botón de Lore con función lambda
+        // Listener para el botón de Lore
         vista.getBtnVerLore().addActionListener(e -> mostrarLoreDesdeArchivo());
     }
 
     /**
-     * [NUEVO] Lee el archivo .txt usando BufferedReader e InputStreamReader en
-     * UTF-8 para que los emojis y acentos salgan perfectos en el cuadro de
-     * diálogo.
+     * Lee el archivo de texto que contiene el lore del juego y lo muestra en
+     * una ventana emergente. Utiliza UTF-8 para asegurar la correcta
+     * visualización de caracteres especiales.
      */
     private void mostrarLoreDesdeArchivo() {
         StringBuilder contenidoLore = new StringBuilder();
 
-        // Try-with-resources: asegura que el buffer se cierre pase lo que pase
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(rutaLore), StandardCharsets.UTF_8))) {
 
@@ -52,18 +66,18 @@ public class MenuInicialController {
                 contenidoLore.append(linea).append("\n");
             }
 
-            // --- DISEÑO DE LA VENTANA DE LORE ---
+            // Configuración del área de texto para el despliegue del Lore
             JTextArea areaTexto = new JTextArea(contenidoLore.toString());
             areaTexto.setFont(new Font("Georgia", Font.PLAIN, 14));
             areaTexto.setEditable(false);
-            areaTexto.setLineWrap(true);       // Salto de línea automático al llegar al borde
-            areaTexto.setWrapStyleWord(true);   // Corta por palabras completas en lugar de romper sílabas
+            areaTexto.setLineWrap(true);
+            areaTexto.setWrapStyleWord(true);
 
-            // Un panel con scroll por si el texto es largo
+            // Panel con scroll para manejar textos largos
             JScrollPane scrollPane = new JScrollPane(areaTexto);
             scrollPane.setPreferredSize(new Dimension(550, 400));
 
-            // Desplegamos la pop-up
+            // Desplegar diálogo informativo
             JOptionPane.showMessageDialog(vista, scrollPane, "📖 Crónicas del Panteón RPG", JOptionPane.PLAIN_MESSAGE);
 
         } catch (Exception ex) {

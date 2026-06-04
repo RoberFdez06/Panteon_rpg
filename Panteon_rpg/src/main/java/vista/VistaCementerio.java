@@ -2,10 +2,18 @@ package vista;
 
 import controlador.eventos.CementerioController;
 
+/**
+ * Interfaz gráfica que representa el cementerio del juego. Muestra el registro
+ * de héroes caídos mediante un sistema de tablas paginadas.
+ */
 public class VistaCementerio extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaCementerio.class.getName());
 
+    /**
+     * Constructor de la vista. Inicializa los componentes de la interfaz,
+     * bloquea el redimensionamiento de la ventana y vincula su controlador.
+     */
     public VistaCementerio() {
         initComponents();
         this.setResizable(false);
@@ -13,30 +21,54 @@ public class VistaCementerio extends javax.swing.JFrame {
         new CementerioController(this);
     }
 
+    // =========================================================================
+    //  GETTERS PÚBLICOS EXIGIDOS POR EL MVC (Dan acceso externo a los componentes)
+    // =========================================================================
+    /**
+     * @return La primera tabla de registros del cementerio (página izquierda).
+     */
     public javax.swing.JTable getTabla1() {
         return tabla1;
     }
 
+    /**
+     * @return La segunda tabla de registros del cementerio (página derecha).
+     */
     public javax.swing.JTable getTabla2() {
         return tabla2;
     }
 
+    /**
+     * @return El panel de desplazamiento asociado a la primera tabla.
+     */
     public javax.swing.JScrollPane getScrollPanel1() {
         return scrollPanel1;
     }
 
+    /**
+     * @return El panel de desplazamiento asociado a la segunda tabla.
+     */
     public javax.swing.JScrollPane getScrollPanel2() {
         return scrollPanel2;
     }
 
+    /**
+     * @return Botón para retroceder la página de registros.
+     */
     public javax.swing.JButton getAnterior() {
         return anterior;
     }
 
+    /**
+     * @return Botón para avanzar la página de registros.
+     */
     public javax.swing.JButton getSiguiente() {
         return siguiente;
     }
 
+    /**
+     * @return Botón para regresar al menú de inicio.
+     */
     public javax.swing.JButton getVolverInicio() {
         return volverInicio;
     }
