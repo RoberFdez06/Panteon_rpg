@@ -529,4 +529,50 @@ public class AccionUsuarioController {
         }
         return listaCaidos;
     }
+
+    /**
+     * Exporta un archivo de texto con el epitafio del héroe caído en la ruta
+     * especificada.
+     */
+    public void exportarEpitafioTXT(String nombre, String clase, int nivel, int piso, String asesino) {
+        // Definimos la ruta exacta que nos has facilitado
+        String rutaCarpeta = "Panteon_rpg/src/main/java/txt/";
+        String nombreArchivo = "epitafio_" + nombre + ".txt";
+
+        // Creamos el objeto File para asegurarnos de que la carpeta física exista
+        java.io.File carpeta = new java.io.File(rutaCarpeta);
+        if (!carpeta.exists()) {
+            carpeta.mkdirs(); // Crea la estructura de carpetas si no existiera
+        }
+
+        // Usamos BufferedWriter para escribir de forma eficiente en el fichero
+        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter(rutaCarpeta + nombreArchivo))) {
+            bw.write("===============================================");
+            bw.newLine();
+            bw.write("         AQUÍ YACE UN HÉROE DEL PANTEÓN        ");
+            bw.newLine();
+            bw.write("===============================================");
+            bw.newLine();
+            bw.write("Nombre del Héroe : " + nombre);
+            bw.newLine();
+            bw.write("Clase Elegida    : " + clase);
+            bw.newLine();
+            bw.write("Nivel Alcanzado  : " + nivel);
+            bw.newLine();
+            bw.write("Piso del Deceso  : " + piso);
+            bw.newLine();
+            bw.write("Asesinado por    : " + asesino);
+            bw.newLine();
+            bw.write("-----------------------------------------------");
+            bw.newLine();
+            bw.write("Epitafio: Cayó con honor defendiendo el panteón.");
+            bw.newLine();
+            bw.write("===============================================");
+            bw.newLine();
+
+            System.out.println("Fichero de epitafio exportado con éxito en: " + rutaCarpeta + nombreArchivo);
+        } catch (java.io.IOException e) {
+            System.err.println("Error al escribir el epitafio con BufferedWriter: " + e.getMessage());
+        }
+    }
 }
