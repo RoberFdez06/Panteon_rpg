@@ -16,6 +16,7 @@ controlador\logica\MonstruoController$1.class
 modelo\ConsultasRPG.class
 modelo\Monstruo.class
 modelo\Personaje.class
+controlador\eventos\AccionUsuarioController$5.class
 controlador\eventos\AccionUsuarioController$2.class
 vista\VistaSubidaNivel.class
 modelo\Cementerio.class

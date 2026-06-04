@@ -1,8 +1,6 @@
--- 1. Crear la base de datos (si no existe) y usarla
 CREATE DATABASE IF NOT EXISTS panteon_rpg;
 USE panteon_rpg;
 
--- 2. Crear tabla: partidas
 CREATE TABLE partidas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_partida VARCHAR(100) NOT NULL,
@@ -10,9 +8,6 @@ CREATE TABLE partidas (
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================================================================
--- 3. Crear tabla: clases_personaje (Estadísticas Base por Clase)
--- =========================================================================
 CREATE TABLE clases_personaje (
     clase VARCHAR(50) PRIMARY KEY,
     hp_max INT NOT NULL,
@@ -24,22 +19,16 @@ CREATE TABLE clases_personaje (
 );
 
 INSERT INTO clases_personaje (clase, hp_max, ataque, defensa, velocidad, suerte, estamina_max) VALUES
--- Guerrero (SÚPER BUFF): 800 de vida y 120 de ataque. Destroza al Cíclope en dos turnos.
 ('Guerrero', 800, 120, 30, 60, 25, 150),
 
--- Mago (SÚPER BUFF): El exterminador. 180 de ataque; mata de un solo golpe a casi todos los monstruos.
 ('Mago',      500, 180, 15, 70, 35, 200),
 
--- Pícaro (SÚPER BUFF): 130 de ataque, velocidad absurda para atacar siempre primero y críticos masivos.
 ('Pícaro',   600, 130, 20, 150, 80, 130),
 
--- Tanque (SÚPER BUFF): 1200 de vida y 50 de defensa. Literalmente inmortal ante cualquier jefe.
 ('Tanque',   1200,  90, 50, 40, 15, 180),
 
--- Arquero (SÚPER BUFF): 150 de ataque base y 140 de velocidad. Limpia el combate al instante.
 ('Arquero',  650, 150, 22, 140, 45, 140);
 
--- 4. Crear tabla: personajes
 CREATE TABLE personajes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     partida_id INT NOT NULL,
@@ -59,7 +48,6 @@ CREATE TABLE personajes (
     FOREIGN KEY (clase) REFERENCES clases_personaje(clase)
 );
 
--- 5. Crear tabla: monstruos
 CREATE TABLE monstruos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -71,7 +59,6 @@ CREATE TABLE monstruos (
     suerte INT NOT NULL
 );
 
--- 6. Crear tabla: cementerio_heroes
 CREATE TABLE cementerio_heroes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_heroe VARCHAR(100) NOT NULL,
@@ -83,7 +70,6 @@ CREATE TABLE cementerio_heroes (
     epitafio TEXT
 );
 
--- 7. Crear tabla: bestiario (Catálogo global)
 CREATE TABLE bestiario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     monstruo_id INT NOT NULL,
@@ -92,7 +78,6 @@ CREATE TABLE bestiario (
     UNIQUE (monstruo_id)
 );
 
--- 8. Insertar el catálogo de los 10 Monstruos Mitológicos
 INSERT INTO monstruos (nombre, tipo, hp_max, ataque, defensa, velocidad, suerte) VALUES
 
 ('Basilisco Menor', 'Rápido', 30, 10, 2, 80, 15),

@@ -75,7 +75,6 @@ public class DataController {
      * @param asesino Nombre del monstruo que acabó con el héroe.
      */
     public void registrarMuerteHeroe(String nombre, String clase, int nivel, int piso, String asesino) {
-        // Método destinado a interactuar con el registro histórico de caídos en el cementerio.
-        // consultasBD.registrarMuerte(nombre, clase, nivel, piso, asesino, "Murió en combate.");
+        consultasBD.registrarMuerte(nombre, clase, nivel, piso, asesino);
     }
 }

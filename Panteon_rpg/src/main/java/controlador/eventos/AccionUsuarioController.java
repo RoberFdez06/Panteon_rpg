@@ -228,6 +228,9 @@ public class AccionUsuarioController {
     /**
      * Ejecuta la lógica de ataque entre el héroe y el monstruo.
      */
+    /**
+     * Ejecuta la lógica de ataque entre el héroe y el monstruo.
+     */
     public void clickAtacar() {
         if (monstruoActual != null && heroeActual != null) {
             int danoAlMonstruo = heroeActual.getAtaque();
@@ -247,6 +250,30 @@ public class AccionUsuarioController {
                 heroeActual.setHp_actual(Math.max(0, nuevaVidaHeroe));
 
                 if (heroeActual.getHp_actual() <= 0) {
+                    // CORRECCIÓN: Guardamos físicamente al personaje en el cementerio antes de cambiar de pantalla
+                    try {
+                        modelo.ConexionBD conexionBD = new modelo.ConexionBD() {
+                        };
+                        java.sql.Connection con = conexionBD.getConexion();
+                        String sqlInsert = "INSERT INTO cementerio_heroes (nombre_heroe, clase, nivel_alcanzado, piso_final, estado, asesino, epitafio) "
+                                + "VALUES (?, ?, ?, ?, 'Fallecido', ?, 'Cayó con honor en la mazmorra.')";
+
+                        java.sql.PreparedStatement ps = con.prepareStatement(sqlInsert);
+                        ps.setString(1, heroeActual.getNombre());
+                        ps.setString(2, heroeActual.getClase());
+                        ps.setInt(3, heroeActual.getNivel());
+                        ps.setInt(4, this.pisoActual);
+                        ps.setString(5, monstruoActual.getNombre());
+
+                        ps.executeUpdate();
+                        ps.close();
+                        con.close();
+                    } catch (Exception e) {
+                        System.err.println("Error al registrar el héroe caído en la BD: " + e.getMessage());
+                    }
+
+                    // Después de registrarlo, procedemos a borrar su partida activa (opcional, típico de un Roguelike)
+                    // dataCtrl.borrarPartida(heroeActual.getPartida_id()); 
                     navCtrl.irADerrota();
                 }
             }
@@ -478,7 +505,8 @@ public class AccionUsuarioController {
             };
             java.sql.Connection con = conexionBD.getConexion();
 
-            String sql = "SELECT nombre, clase, nivel, piso_actual FROM partidas WHERE hp_actual <= 0 ORDER BY id DESC LIMIT ? OFFSET ?";
+            // CORRECCIÓN: Apuntamos a la tabla 'cementerio_heroes' con sus columnas reales
+            String sql = "SELECT nombre_heroe, clase, nivel_alcanzado, piso_final FROM cementerio_heroes ORDER BY id DESC LIMIT ? OFFSET ?";
 
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, limite);
@@ -487,10 +515,10 @@ public class AccionUsuarioController {
 
             while (rs.next()) {
                 listaCaidos.add(new Object[]{
-                    rs.getString("nombre"),
+                    rs.getString("nombre_heroe"),
                     rs.getString("clase"),
-                    rs.getInt("nivel"),
-                    rs.getInt("piso_actual")
+                    rs.getInt("nivel_alcanzado"),
+                    rs.getInt("piso_final")
                 });
             }
             rs.close();

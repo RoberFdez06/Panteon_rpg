@@ -311,4 +311,42 @@ public class ConsultasRPG extends ConexionBD {
         }
         return false;
     }
+
+    public java.util.List<Object[]> obtenerCaidos(int limite, int offset) {
+        java.util.List<Object[]> lista = new java.util.ArrayList<>();
+        // Usamos los nombres reales de tus columnas: nombre_heroe, clase, nivel_alcanzado, piso_final
+        String sql = "SELECT nombre_heroe, clase, nivel_alcanzado, piso_final FROM cementerio_heroes ORDER BY id DESC LIMIT ? OFFSET ?";
+
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, limite);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(new Object[]{
+                        rs.getString("nombre_heroe"),
+                        rs.getString("clase"),
+                        rs.getInt("nivel_alcanzado"),
+                        rs.getInt("piso_final")
+                    });
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cargar cementerio: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public void registrarMuerte(String nombre, String clase, int nivel, int piso, String asesino) {
+        String sql = "INSERT INTO cementerio_heroes (nombre_heroe, clase, nivel_alcanzado, piso_final, estado, asesino) VALUES (?, ?, ?, ?, 'Muerto', ?)";
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ps.setString(2, clase);
+            ps.setInt(3, nivel);
+            ps.setInt(4, piso);
+            ps.setString(5, asesino);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al registrar muerte en cementerio: " + e.getMessage());
+        }
+    }
 }
