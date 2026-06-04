@@ -19,15 +19,11 @@ CREATE TABLE clases_personaje (
 );
 
 INSERT INTO clases_personaje (clase, hp_max, ataque, defensa, velocidad, suerte, estamina_max) VALUES
-('Guerrero', 800, 120, 30, 60, 25, 150),
-
-('Mago',      500, 180, 15, 70, 35, 200),
-
-('Pícaro',   600, 130, 20, 150, 80, 130),
-
-('Tanque',   1200,  90, 50, 40, 15, 180),
-
-('Arquero',  650, 150, 22, 140, 45, 140);
+('Guerrero', 140, 22, 12, 45, 15, 100),
+('Mago',      90, 35,  5, 50, 20, 120),
+('Pícaro',   110, 26,  8, 75, 35,  90),
+('Tanque',   200, 15, 20, 25, 10, 110),
+('Arquero',  115, 28,  9, 65, 22,  95);
 
 CREATE TABLE personajes (
     id INT AUTO_INCREMENT PRIMARY KEY,
