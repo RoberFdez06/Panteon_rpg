@@ -113,7 +113,7 @@ public class VistaCombates extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         monstruo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(monstruo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 450, 360));
+        getContentPane().add(monstruo, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 610, 360));
 
         personaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         personaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Personajes/PersonajeGenericoEspalda.png"))); // NOI18N
@@ -132,7 +132,7 @@ public class VistaCombates extends javax.swing.JFrame {
         vidaMonstruo1.setForeground(new java.awt.Color(29, 143, 29));
         vidaMonstruo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         vidaMonstruo1.setText("vida/vida max");
-        getContentPane().add(vidaMonstruo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 470, -1));
+        getContentPane().add(vidaMonstruo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 670, -1));
 
         vidaPersonaje.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         vidaPersonaje.setForeground(new java.awt.Color(29, 143, 29));
@@ -144,12 +144,12 @@ public class VistaCombates extends javax.swing.JFrame {
         txtInfo.setForeground(new java.awt.Color(255, 255, 255));
         txtInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtInfo.setText("Esperando info");
-        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 410, 810, 110));
+        getContentPane().add(txtInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 810, 110));
 
         txtPiso.setFont(new java.awt.Font("Cinzel", 1, 24)); // NOI18N
         txtPiso.setForeground(new java.awt.Color(255, 255, 255));
         txtPiso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(txtPiso, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 330, 100));
+        getContentPane().add(txtPiso, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 330, 100));
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1280, 720));
 
         pack();

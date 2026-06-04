@@ -92,14 +92,22 @@ public class ConsultasRPG extends ConexionBD {
      * @param p Objeto Personaje con las estadísticas actuales.
      */
     public void actualizarEstadoPersonaje(Personaje p) {
-        String sql = "UPDATE personajes SET hp_actual = ?, estamina_actual = ?, nivel = ?, experiencia = ? WHERE id = ?";
+        String sql = "UPDATE personajes SET hp_max = ?, hp_actual = ?, ataque = ?, defensa = ?, "
+                + "velocidad = ?, suerte = ?, estamina_max = ?, estamina_actual = ?, "
+                + "nivel = ?, experiencia = ? WHERE id = ?";
         Connection con = getConexion();
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, p.getHp_actual());
-            ps.setInt(2, p.getEstamina_actual());
-            ps.setInt(3, p.getNivel());
-            ps.setInt(4, p.getExperiencia());
-            ps.setInt(5, p.getId());
+            ps.setInt(1, p.getHp_max());
+            ps.setInt(2, p.getHp_actual());
+            ps.setInt(3, p.getAtaque());
+            ps.setInt(4, p.getDefensa());
+            ps.setInt(5, p.getVelocidad());
+            ps.setInt(6, p.getSuerte());
+            ps.setInt(7, p.getEstamina_max());
+            ps.setInt(8, p.getEstamina_actual());
+            ps.setInt(9, p.getNivel());
+            ps.setInt(10, p.getExperiencia());
+            ps.setInt(11, p.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error al actualizar personaje: " + e.getMessage());

@@ -4,6 +4,7 @@ import controlador.navegacion.NavegacionController;
 import controlador.persistencia.DataController;
 import controlador.logica.MonstruoController;
 import modelo.Personaje;
+import vista.VistaSubidaNivel;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -236,14 +237,11 @@ public class AccionUsuarioController {
                 int monstruosDerrotados = heroeActual.getExperiencia() + 1;
                 heroeActual.setExperiencia(monstruosDerrotados);
 
-                if (monstruosDerrotados >= 3) {
-                    subirNivelHeroe();
-                } else {
-                    dataCtrl.guardarProgreso(this.heroeActual, this.pisoActual);
-                }
-
+                // Solo guardamos y vamos a victoria.
+                dataCtrl.guardarProgreso(this.heroeActual, this.pisoActual);
                 navCtrl.irAVictoria();
             } else {
+                // Lógica de daño al héroe
                 int danoAlHeroe = monstruoActual.getAtaque();
                 int nuevaVidaHeroe = heroeActual.getHp_actual() - danoAlHeroe;
                 heroeActual.setHp_actual(Math.max(0, nuevaVidaHeroe));
@@ -256,37 +254,79 @@ public class AccionUsuarioController {
     }
 
     /**
-     * Incrementa estadísticas y nivel del héroe tras cumplir objetivos.
+     * Incrementa estadísticas y nivel del héroe tras cumplir objetivos. Clona
+     * el estado del personaje antes del ascenso para instanciar la vista de
+     * subida de nivel de manera precisa antes de proceder a la pantalla de
+     * victoria.
      */
     public void subirNivelHeroe() {
         if (this.heroeActual == null) {
             return;
         }
 
+        // Creamos una copia del héroe con los atributos antiguos antes de modificarlos
+        Personaje heroeAntesSubida = new Personaje(
+                this.heroeActual.getId(), this.heroeActual.getPartida_id(), this.heroeActual.getNombre(),
+                this.heroeActual.getClase(), this.heroeActual.getNivel(), this.heroeActual.getExperiencia(),
+                this.heroeActual.getHp_max(), this.heroeActual.getHp_actual(), this.heroeActual.getAtaque(),
+                this.heroeActual.getDefensa(), this.heroeActual.getVelocidad(), this.heroeActual.getSuerte(),
+                this.heroeActual.getEstamina_max(), this.heroeActual.getEstamina_actual()
+        );
+
         int nivelNuevo = this.heroeActual.getNivel() + 1;
         this.heroeActual.setNivel(nivelNuevo);
         this.heroeActual.setExperiencia(0);
 
+        // Incremento de estadísticas base
         int nuevaHpMax = (int) (this.heroeActual.getHp_max() * 1.15);
         this.heroeActual.setHp_max(nuevaHpMax);
         this.heroeActual.setAtaque(this.heroeActual.getAtaque() + 10);
         this.heroeActual.setDefensa(this.heroeActual.getDefensa() + 5);
         this.heroeActual.setVelocidad(this.heroeActual.getVelocidad() + 4);
+        this.heroeActual.setEstamina_max(this.heroeActual.getEstamina_max() + 5);
+        this.heroeActual.setSuerte(this.heroeActual.getSuerte() + 2);
+        // ---------------------------------------
 
+        // Lógica de curación y estamina actual
         int puntosACurar = (int) (nuevaHpMax * 0.30);
         int vidaCalculada = this.heroeActual.getHp_actual() + puntosACurar;
-
         this.heroeActual.setHp_actual(Math.min(nuevaHpMax, vidaCalculada));
+
+        // Restauramos estamina al nuevo máximo
         this.heroeActual.setEstamina_actual(this.heroeActual.getEstamina_max());
 
+        // Guardamos cambios en BD
         dataCtrl.guardarProgreso(this.heroeActual, this.pisoActual);
+
+        // Inicializamos la vista y el controlador
+        VistaSubidaNivel vistaSubida = new VistaSubidaNivel();
+        new SubidaNivelController(vistaSubida, heroeAntesSubida, this.heroeActual);
+        navCtrl.cambiarVista(vistaSubida);
+    }
+
+    /**
+     * Flujo de navegación activado al pulsar continuar desde la pantalla de
+     * nivel. Redirige al flujo estándar de la pantalla de victoria.
+     */
+    public void clickContinuarTrasSubidaNivel() {
+        navCtrl.irAContinuarRun();
     }
 
     /**
      * Acción para continuar tras una victoria.
      */
+    /**
+     * Acción para continuar tras una victoria. Si el héroe tiene 3 o más
+     * monstruos derrotados, se le obliga a pasar por la pantalla de subida de
+     * nivel antes de continuar la run.
+     */
     public void clickContinuarVictoria() {
-        navCtrl.irAContinuarRun();
+        if (heroeActual.getExperiencia() >= 3) {
+            // En lugar de ir a ContinuarRun, lanzamos el proceso de subida de nivel
+            subirNivelHeroe();
+        } else {
+            navCtrl.irAContinuarRun();
+        }
     }
 
     /**

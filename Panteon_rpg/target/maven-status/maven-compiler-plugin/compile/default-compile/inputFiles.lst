@@ -8,6 +8,7 @@ C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\eventos
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\eventos\MenuCreacionPersonajeController.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\eventos\MenuInicialController.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\eventos\MenuPartidasController.java
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\eventos\SubidaNivelController.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\logica\MonstruoController.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\logica\PersonajeController.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\controlador\navegacion\NavegacionController.java
@@ -28,3 +29,4 @@ C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\vista\VistaHasPerdi
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\vista\VistaMenuCreacionPersonaje.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\vista\VistaMenuInicial.java
 C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\vista\VistaMenuPartidas.java
+C:\Users\rober\Desktop\Panteon_rpg\Panteon_rpg\src\main\java\vista\VistaSubidaNivel.java

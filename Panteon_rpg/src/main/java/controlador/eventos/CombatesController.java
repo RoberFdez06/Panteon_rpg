@@ -121,24 +121,38 @@ public class CombatesController {
         int numeroPiso = ctrlPrincipal.getPisoActual();
         vista.setPiso("Piso: " + numeroPiso);
 
-        String txtVidaHeroe = "Vida Héroe: --/--";
-        if (heroe != null) {
-            txtVidaHeroe = heroe.getNombre() + " (HP: " + heroe.getHp_actual() + "/" + heroe.getHp_max() + ")";
-        }
+        String txtVidaHeroe = (heroe != null)
+                ? heroe.getNombre() + " (HP: " + heroe.getHp_actual() + "/" + heroe.getHp_max() + ")" : "Vida Héroe: --/--";
 
         String txtVidaMonstruo = "Vida Monstruo: --/--";
         String rutaImagen = "";
 
         if (monstruo != null) {
-            txtVidaMonstruo = monstruo.getNombre() + " (HP: " + monstruo.getHpActual() + "/" + monstruo.getHpMax() + ")";
+            String nombre = monstruo.getNombre();
+            String stats = " (HP: " + monstruo.getHpActual() + "/" + monstruo.getHpMax() + ")";
+            String prefijo = "";
+            String colorHex = "#1D8F1D"; // Color verde original de tu vista
 
+            // Lógica para Boss / Miniboss
+            if (numeroPiso % 10 == 0) {
+                prefijo = "BOSS: ";
+                colorHex = "red"; // El nombre del jefe será rojo
+            } else if (numeroPiso % 5 == 0) {
+                prefijo = "MINIBOSS: ";
+                colorHex = "red"; // El nombre del miniboss será rojo
+            }
+
+            // Usamos HTML para pintar solo el nombre de rojo y el resto verde
+            txtVidaMonstruo = "<html><font color='" + colorHex + "'>" + prefijo + nombre
+                    + "</font><font color='#1D8F1D'>" + stats + "</font></html>";
+
+            // --- Lógica de imágenes ---
             String nombreRaw = monstruo.getNombre();
             String parseado = java.text.Normalizer.normalize(nombreRaw, java.text.Normalizer.Form.NFD)
                     .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
                     .toLowerCase().trim();
 
             String carpeta = "/imagenes/Monstruos/";
-
             switch (parseado) {
                 case "basilisco menor":
                     rutaImagen = carpeta + "BasiliscoMenorSinFondoV1Escalado.png";
