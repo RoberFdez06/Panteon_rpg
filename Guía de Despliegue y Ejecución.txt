@@ -1,0 +1,49 @@
+Guía de Despliegue y Ejecución
+Sigue estos pasos en orden para clonar el repositorio, desplegar la base de datos Oracle y ejecutar el juego en tu equipo local.
+
+Requisitos Previos
+Java JDK: Versión 11 o superior.
+
+Base de Datos: Oracle Database (XE, Standard o Enterprise) activo.
+
+Cliente SQL: Oracle SQL Developer, SQL*Plus o similar.
+
+Controlador JDBC: Driver de Oracle (ojdbc8.jar u ojdbc10.jar).
+
+Git: Para clonar el repositorio.
+
+IDE de Java: IntelliJ IDEA, Eclipse, NetBeans, etc.
+
+Paso 1: Clonar el Repositorio
+Abre una consola de comandos (Terminal o Git Bash) y ejecuta:
+git clone https://github.com/RoberFdez06/Panteon_rpg
+cd Panteon_rpg
+
+Paso 2: Desplegar la Base de Datos (Oracle SQL)
+Abre Oracle SQL Developer y conéctate a tu base de datos local.
+
+Ve a Archivo -> Abrir... y selecciona el archivo .sql ubicado en la ruta:
+
+Panteon_rpg/src/main/java/sql/
+
+Haz clic en el botón Ejecutar como Script (o presiona F5) para correr todo el script en la hoja de trabajo.
+
+Ejecuta un COMMIT; al finalizar para asegurarte de guardar los cambios en la base de datos.
+
+Paso 3: Configurar la Conexión en Java
+Abre el proyecto en tu IDE.
+
+Ve a la ruta: src/main/java/modelo/ConexionBD.java
+
+Modifica la URL de conexión, el usuario y la contraseña según tu servidor local de Oracle:
+// Configuración para Oracle Database:
+String url = "jdbc:oracle:thin:@localhost:1521:xe"; // O "jdbc:oracle:thin:@localhost:1521/XEPDB1" si usas una PDB
+String usuario = "tu_usuario_oracle";
+String password = "tu_password_oracle";
+
+Paso 4: Ejecutar la Aplicación
+Asegúrate de tener la librería del conector de Oracle (ojdbc8.jar u ojdbc10.jar) agregada a las dependencias / Classpath del proyecto.
+
+Localiza la clase que contiene el método main (por ejemplo, Main.java o la clase principal de la interfaz).
+
+Haz clic derecho sobre la clase y selecciona Run (Ejecutar).
