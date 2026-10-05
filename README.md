@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Panteon_rpg/src/main/resources/imagenes/Iconos/LogoPanteonRPG.jpg" alt="Panteón RPG Logo" width="220">
+</p>
+
 # Panteon_rpg
 Panteón RPG — Mazmorra Roguelike
 Panteón RPG es un videojuego de rol táctico en texto y entornos gráficos desarrollado en Java utilizando la librería Swing. El sistema implementa mecánicas de estilo Roguelike, donde el usuario debe guiar a un héroe a través de una torre o mazmorra infinita habitada por monstruos mitológicos. La muerte del personaje es permanente, lo que desencadena la transferencia de sus registros a un histórico de héroes caídos en la base de datos y la exportación de un epitafio físico en formato de texto plano.
