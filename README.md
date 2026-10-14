@@ -111,8 +111,6 @@ cd Panteon_rpg
    Panteon_rpg/src/main/java/sql/ScriptPanteon_rpg.sql
    ```
 
-   > 📌 _Ajusta esta ruta a donde esté tu script. Si aún no está en el repositorio, súbelo para que cualquiera pueda ejecutar el juego._
-
 ### 3. Configurar las credenciales
 
 Edita `ConexionBD.java` con tu usuario, contraseña y URL de conexión:
