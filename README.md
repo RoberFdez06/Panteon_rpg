@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33426135/README.md)
 <p align="center">
   <img src="Panteon_rpg/src/main/resources/imagenes/Iconos/LogoPanteonRPG.jpg" alt="Panteón RPG Logo" width="260">
 </p>
@@ -6,12 +5,12 @@
 <h1 align="center">Panteón RPG</h1>
 
 <p align="center">
-  Roguelike por turnos con temática mitológica, desarrollado en <b>Java Swing</b> con arquitectura <b>MVC</b> y persistencia híbrida (<b>Oracle SQL</b> + ficheros de texto).
+  Roguelike por turnos con temática mitológica, desarrollado en <b>Java Swing</b> con arquitectura <b>MVC</b> y persistencia híbrida (<b>MySQL</b> + ficheros de texto).
 </p>
 
 <p align="center">
   <img alt="Java" src="https://img.shields.io/badge/Java-11%2B-orange">
-  <img alt="Oracle" src="https://img.shields.io/badge/Oracle-SQL-red">
+  <img alt="MySQL" src="https://img.shields.io/badge/MySQL-8.0%2B-blue">
   <img alt="Arquitectura" src="https://img.shields.io/badge/arquitectura-MVC-green">
   <img alt="Estado" src="https://img.shields.io/badge/estado-en%20desarrollo-yellow">
 </p>
@@ -43,11 +42,17 @@ El proyecto demuestra el uso de patrones de diseño, persistencia híbrida (base
 
 ## Capturas
 
-> 📌 _Añade aquí capturas o un GIF del juego. Es lo primero que se mira en un repositorio._
-
-| Menú principal | Combate | Subida de nivel |
+| Menú principal | Selección de personaje | Combate |
 | :---: | :---: | :---: |
-| ![Menú](docs/capturas/menu.png) | ![Combate](docs/capturas/combate.png) | ![Nivel](docs/capturas/subida-nivel.png) |
+| ![Menú principal](docs/menu.png) | ![Selección de personaje](docs/seleccion-personaje.png) | ![Combate](docs/combate.png) |
+
+| Subida de nivel | Bestiario | Partidas guardadas |
+| :---: | :---: | :---: |
+| ![Subida de nivel](docs/subida-nivel.png) | ![Bestiario](docs/bestiario.png) | ![Partidas guardadas](docs/partidas-guardadas.png) |
+
+| Victoria | Derrota | Menú de pausa |
+| :---: | :---: | :---: |
+| ![Has ganado](docs/has-ganado.png) | ![Has perdido](docs/has-perdido.png) | ![Menú de pausa](docs/menu-pausa.png) |
 
 ## Características principales
 
@@ -56,7 +61,7 @@ El proyecto demuestra el uso de patrones de diseño, persistencia híbrida (base
 - **Bestiario.** Registro persistente de las criaturas descubiertas por el héroe durante la partida.
 - **Muerte permanente (permadeath).** Si la vida del héroe llega a cero, la partida se cierra de forma definitiva y el personaje pasa al cementerio de héroes.
 - **Persistencia híbrida:**
-  - **Oracle SQL:** partidas activas (máximo **3 ranuras** simultáneas), progreso del héroe, estadísticas base de las clases, catálogo de monstruos y cementerio.
+  - **MySQL:** partidas activas (máximo **3 ranuras** simultáneas), progreso del héroe, estadísticas base de las clases, catálogo de monstruos y cementerio.
   - **Archivos de texto:** al ser derrotado, se genera automáticamente un `.txt` estructurado con `BufferedWriter`, que actúa como epitafio físico del héroe.
 
 ## Arquitectura (MVC)
@@ -80,6 +85,8 @@ El proyecto sigue el patrón **Modelo-Vista-Controlador** para separar responsab
 | `bestiario_partida` | Tabla de relación entre partidas y monstruos descubiertos. |
 | `cementerio_heroes` | Registro histórico y definitivo de los héroes caídos. |
 
+<!-- Opcional: añadir aquí un diagrama entidad-relación en docs/ y enlazarlo -->
+
 ## Archivos de salida: el epitafio
 
 Al morir un personaje, el controlador usa `BufferedWriter` y `FileWriter` para generar un archivo físico. Si los directorios no existen, el sistema los crea automáticamente.
@@ -92,8 +99,8 @@ Al morir un personaje, el controlador usa `BufferedWriter` y `FileWriter` para g
 ### Requisitos
 
 - Java JDK 11 o superior
-- Oracle Database (por ejemplo, Oracle XE) accesible desde tu equipo
-- Driver JDBC de Oracle (`ojdbc`) añadido al classpath del proyecto
+- MySQL Server 8.0 o superior
+- Conector JDBC de MySQL (`mysql-connector-java`) añadido al classpath del proyecto
 
 ### 1. Clonar el repositorio
 
@@ -104,30 +111,31 @@ cd Panteon_rpg
 
 ### 2. Configurar la base de datos
 
-1. Abre SQL Developer, SQL*Plus u otro cliente y conéctate con tu usuario.
-2. Ejecuta el script SQL para crear las tablas e insertar los datos base (clases y monstruos):
+1. Abre MySQL Workbench, la CLI u otro cliente y conéctate a tu servidor.
+2. Ejecuta el script SQL, que crea la base de datos `panteon_rpg`, sus tablas y los datos base (clases y monstruos):
 
-   ```sql
-   Panteon_rpg/src/main/java/sql/ScriptPanteon_rpg.sql
+   ```bash
+   mysql -u root -p < Panteon_rpg/src/main/java/sql/ScriptPanteon_rpg.sql
    ```
 
-### 3. Configurar las credenciales
+### 3. Configurar la conexión
 
-Edita `ConexionBD.java` con tu usuario, contraseña y URL de conexión:
+La conexión se define en `modelo/ConexionBD.java`. Por defecto usa la base de datos `panteon_rpg` en `localhost`, con el usuario `root` y sin contraseña:
 
 ```java
-private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-private static final String USUARIO = "tu_usuario";
-private static final String PASSWORD = "tu_contraseña";
+private final String bd = "panteon_rpg";
+private final String user = "root";
+private final String password = "";
+private final String url = "jdbc:mysql://localhost/" + bd;
 ```
 
-> Ajusta el SID o el nombre de servicio (`XE`, `XEPDB1`, etc.) según tu instalación.
+Si tu servidor MySQL tiene contraseña para `root` o quieres usar otro usuario, cambia `user` y `password` antes de ejecutar.
 
 ### 4. Ejecutar
 
 1. Importa el proyecto en tu IDE como proyecto existente.
-2. Asegúrate de que el driver `ojdbc` está en el classpath.
-3. Ejecuta la clase principal que instancia el menú inicial.
+2. Asegúrate de que el conector JDBC de MySQL está en el classpath.
+3. Ejecuta la clase principal `mvp/panteon_rpg.java`, que lanza el menú inicial.
 
 ## Cómo se juega
 
