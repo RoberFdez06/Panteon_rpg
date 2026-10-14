@@ -108,7 +108,7 @@ cd Panteon_rpg
 2. Ejecuta el script SQL para crear las tablas e insertar los datos base (clases y monstruos):
 
    ```sql
-   @scripts/panteon_rpg.sql
+   Panteon_rpg/src/main/java/sql/ScriptPanteon_rpg.sql
    ```
 
    > 📌 _Ajusta esta ruta a donde esté tu script. Si aún no está en el repositorio, súbelo para que cualquiera pueda ejecutar el juego._
