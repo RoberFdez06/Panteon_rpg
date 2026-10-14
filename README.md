@@ -19,7 +19,7 @@ Muerte Permanente (Permadeath): Si los puntos de vida del héroe se reducen a ce
 
 Persistencia Híbrida de Datos:
 
-Base de Datos (MySQL): Gestión de estados de partidas activas (con un límite de 3 ranuras simultáneas), progreso del héroe, estadísticas base de las clases, catálogo de monstruos y el registro del cementerio.
+Base de Datos (Oracle SQL): Gestión de estados de partidas activas (con un límite de 3 ranuras simultáneas), progreso del héroe, estadísticas base de las clases, catálogo de monstruos y el registro del cementerio.
 
 Archivos de Texto (BufferedWriter): Al producirse la derrota, el sistema genera automáticamente un archivo .txt con un formato estructurado que actúa como epitafio físico del héroe en el sistema de archivos local.
 
