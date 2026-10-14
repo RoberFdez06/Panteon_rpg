@@ -80,8 +80,6 @@ El proyecto sigue el patrón **Modelo-Vista-Controlador** para separar responsab
 | `bestiario_partida` | Tabla de relación entre partidas y monstruos descubiertos. |
 | `cementerio_heroes` | Registro histórico y definitivo de los héroes caídos. |
 
-<!-- Opcional: añadir aquí un diagrama entidad-relación en docs/ y enlazarlo -->
-
 ## Archivos de salida: el epitafio
 
 Al morir un personaje, el controlador usa `BufferedWriter` y `FileWriter` para generar un archivo físico. Si los directorios no existen, el sistema los crea automáticamente.
@@ -120,7 +118,6 @@ cd Panteon_rpg
 Edita `ConexionBD.java` con tu usuario, contraseña y URL de conexión:
 
 ```java
-// Ejemplo (no subas credenciales reales al repositorio)
 private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
 private static final String USUARIO = "tu_usuario";
 private static final String PASSWORD = "tu_contraseña";
