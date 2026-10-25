@@ -148,9 +148,10 @@ Si tu servidor MySQL tiene contraseña para `root` o quieres usar otro usuario, 
 
 Ideas y ampliaciones previstas:
 
-- [ ] _Por definir_
-- [ ] _Por definir_
-- [ ] _Por definir_
+- [ ] Más clases de héroe y más monstruos mitológicos
+- [ ] Objetos y equipamiento
+- [ ] Sonido y música
+- [ ] Pruebas unitarias de las reglas de combate
 
 ## Autor
 
