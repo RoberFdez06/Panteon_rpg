@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Javadoc generado: no cuenta en las estadisticas de lenguajes
+Panteon_rpg/target/** linguist-generated
+docs/** linguist-documentation
