@@ -156,7 +156,7 @@ Ideas y ampliaciones previstas:
 ## Autor
 
 **Roberto Fernández Mañero**
-Estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM)
+Estudiante de 2º Desarrollo de Aplicaciones Multiplataforma (DAM)
 
 - GitHub: [@RoberFdez06](https://github.com/RoberFdez06)
 - LinkedIn: [robertofernandezmanerodev](https://www.linkedin.com/in/robertofernandezmanerodev)
