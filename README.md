@@ -24,11 +24,12 @@
 3. [Características principales](#características-principales)
 4. [Arquitectura (MVC)](#arquitectura-mvc)
 5. [Modelo de datos](#modelo-de-datos)
-6. [Archivos de salida: el epitafio](#archivos-de-salida-el-epitafio)
-7. [Instalación y ejecución](#instalación-y-ejecución)
-8. [Cómo se juega](#cómo-se-juega)
-9. [Hoja de ruta](#hoja-de-ruta)
-10. [Autor](#autor)
+6. [Decisiones técnicas](#decisiones-técnicas)
+7. [Archivos de salida: el epitafio](#archivos-de-salida-el-epitafio)
+8. [Instalación y ejecución](#instalación-y-ejecución)
+9. [Cómo se juega](#cómo-se-juega)
+10. [Hoja de ruta](#hoja-de-ruta)
+11. [Autor](#autor)
 
 ---
 
@@ -86,6 +87,16 @@ El proyecto sigue el patrón **Modelo-Vista-Controlador** para separar responsab
 | `cementerio_heroes` | Registro histórico y definitivo de los héroes caídos. |
 
 <!-- Opcional: añadir aquí un diagrama entidad-relación en docs/ y enlazarlo -->
+
+## Decisiones técnicas
+
+- **MVC con una responsabilidad por capa.** El modelo (`Personaje`, `Monstruo`) no conoce las ventanas, las vistas Swing solo dibujan y el controlador decide qué pasa. Así se pueden cambiar las pantallas sin tocar las reglas del combate.
+- **Singleton en `AccionUsuarioController`.** Un único punto recibe los eventos de los botones y guarda el estado en tiempo real, para que no existan dos controladores con estados distintos. `NavegacionController` se ocupa solo de cambiar de pantalla.
+- **Persistencia híbrida.** MySQL guarda lo que se consulta y se relaciona (partidas, héroes, bestiario, cementerio). El epitafio es un `.txt` porque es un resultado para leer, no un dato que se consulta.
+- **La muerte del héroe se guarda en una transacción.** Así no queda a medias entre la partida y el cementerio si algo falla.
+- **Subida de nivel con copia del estado anterior.** Se clona el personaje antes de subir para mostrar cuánto crece cada atributo.
+
+**Limitaciones conocidas:** las credenciales de la base de datos están en `ConexionBD.java` y no hay pruebas unitarias. Ambas cosas están en la hoja de ruta.
 
 ## Archivos de salida: el epitafio
 
@@ -152,6 +163,7 @@ Ideas y ampliaciones previstas:
 - [ ] Objetos y equipamiento
 - [ ] Sonido y música
 - [ ] Pruebas unitarias de las reglas de combate
+- [ ] Leer las credenciales de la base de datos desde un fichero de configuración
 
 ## Autor
 
@@ -159,6 +171,5 @@ Ideas y ampliaciones previstas:
 Estudiante de 2º Desarrollo de Aplicaciones Multiplataforma (DAM)
 
 - GitHub: [@RoberFdez06](https://github.com/RoberFdez06)
-- LinkedIn: [robertofernandezmanerodev](https://www.linkedin.com/in/robertofernandezmanerodev)
 
 > Proyecto final de 1.º de DAM (Programación).
